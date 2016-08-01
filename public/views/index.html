@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="fantasyApp">
+  <head>
+    <meta charset="utf-8">
+    <title>fantasy football</title>
+    <script src="vendors/angular/angular.min.js"></script>
+    <script src="vendors/angular-route/angular-route.min.js"></script>
+    <script src="scripts/fantasyApp.module.js"></script>
+    <script src="scripts/fantasyApp.config.js"></script>
+    <!-- contollers -->
+    <script src="scripts/mainController.js"></script>
+    <script src="scripts/loginController.js"></script>
+    <script src="scripts/homeController.js"></script>
+    <script src="scripts/setupController.js"></script>
+    <script src="scripts/auctiondraftController.js"></script>
+    <script src="scripts/snakedraftController.js"></script>
+    <script src="scripts/previousdraftselectController.js"></script>
+    <script src="scripts/previousdraftviewController.js"></script>
+    <script src="scripts/registerController.js"></script>
+    <base href="/" />
+  </head>
+  <body ng-controller="mainController as main">
+    <header>
+      <h1>Fantasy Football Draft Site</h1>
+    </header>
+    <div ng-view>
+
+    </div>
+
+  </body>
+</html>
