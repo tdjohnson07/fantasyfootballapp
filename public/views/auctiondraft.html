@@ -1,6 +1,10 @@
 <h2>{{auction.data.draftName}}</h2>
+<label for="Search">Search by Name:</label>
+<input type="text" ng-model="auction.searchInput" id="search" />
+<button ng-click="auction.search">Search</button>
 <div>
   <div class="teams" ng-repeat="team in auction.data.setTeams track by $index">
     <h3>{{team}}</h3>
+    <h4>${{auction.teaminfo[$index].cash}}</h4>
   </div>
 </div>
