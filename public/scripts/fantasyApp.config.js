@@ -25,5 +25,16 @@ angular.module('fantasyApp').config(['$routeProvider', '$locationProvider', func
       controller: 'previousdraftselectController',
       controllerAs: 'prevSel'
     })
+    .when('/auction',{
+      templateUrl: '/views/auctionDraft.html',
+      controller: 'auctiondraftController',
+      controllerAs: 'auction',
+      css: '/styles/style.css'
+    })
+    .when('/snake', {
+      templateUrl: '/views/snakedraft.html',
+      controller: 'snakedraftController',
+      controllerAs: 'snake'
+    })
     $locationProvider.html5Mode(true);
 }]);

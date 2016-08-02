@@ -1,0 +1,32 @@
+<h4>Enter Name For Your Draft</h4>
+<input type="text" id="draftName" ng-model="setup.draftName" placeholder="Enter Draft Name">
+<h4>Select Number of Teams</h4>
+<select name="numTeams" ng-model="setup.selectedNum">
+  <option ng-repeat="num in setup.numOfTeams" value={{num}}>{{num}}</option>
+</select>
+<button ng-click="setup.getNum()">Set Team Names</button>
+<div ng-repeat="num in setup.setTeams track by $index">
+<input type="text" id="teamName" ng-model="setup.setTeams[$index]" placeholder="setup.setTeams[$index]">
+</div>
+<h4>include IDP's</h4>
+<input type="checkbox" ng-model="setup.idp">
+<h4>Set number of Rounds</h4>
+<select name="numRounds" ng-model="setup.selectedRounds">
+  <option ng-repeat="num in setup.numOfRounds" value={{num}}>{{num}}</option>
+</select>
+<h4>randomize Draft order</h4>
+<input type="checkbox" ng-model="setup.randomize">
+<div ng-show="setup.auctionTrue">
+  <h4>Enter starting Cash</h4>
+    <input type="number" id="cash" ng-model="setup.cash">
+</div>
+<div ng-hide="setup.auctionTrue">
+  <h4>time for picks</h4>
+  <select name="time" ng-model="setup.pickTime">
+    <option ng-repeat="time in setup.timeSelections" value={{time}}>{{time}}</option>
+  </select>
+</div>
+<br>
+<button ng-click="setup.start()">Start Draft</button>
+<br>
+<button ng-click="setup.confirm()">confirm</button>
