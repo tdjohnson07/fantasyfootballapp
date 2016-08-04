@@ -2,12 +2,17 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
   console.log(DataService.data);
   var vm = this;
   vm.data = DataService.data;
-  vm.teaminfo=[];
-  for (var i=0; i<vm.data.setTeams.length; i++){
-    var team ={};
-    team.teamName = vm.data.setTeams[i];
-    team.cash = vm.data.cash;
-    vm.teaminfo.push(team);
+  vm.displayList=[];
+  var displayIndex =0;
+  function getDisplayList(playerArray, index){
+    for(var i=0; i<10; i++, index++){
+      vm.displayList[i]=playerArray[index];
+    }
   }
-  console.log(vm.teaminfo);
+  vm.nextDisplay = function(){
+    displayIndex+=10;
+    getDisplayList(vm.data.players, displayIndex);
+  }
+  console.log(vm.data.teamInfo);
+  getDisplayList(vm.data.players, displayIndex);
 }]);

@@ -2,9 +2,17 @@
 <label for="Search">Search by Name:</label>
 <input type="text" ng-model="auction.searchInput" id="search" />
 <button ng-click="auction.search">Search</button>
+<div class="displayList">
+  <ul>
+    <li ng-repeat="player in auction.displayList track by $index">
+      {{player.displayname}} {{player.position}} {{player.team}}
+    </li>
+  </ul>
+  <button ng-click="auction.nextDisplay()">Next</button>
+</div>
 <div>
   <div class="teams" ng-repeat="team in auction.data.setTeams track by $index">
     <h3>{{team}}</h3>
-    <h4>${{auction.teaminfo[$index].cash}}</h4>
+    <h4>${{auction.data.teamInfo[$index].cash}}</h4>
   </div>
 </div>

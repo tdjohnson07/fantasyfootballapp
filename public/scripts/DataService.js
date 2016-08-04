@@ -6,6 +6,13 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
   data.idp=false;
   data.selectedRounds= 0;
   data.randomize=false;
+  data.qbs=[];
+  data.rbs=[];
+  data.wrs=[];
+  data.tes=[];
+  data.kicks=[];
+  data.defs=[];
+  data.teamInfo=[];
   function convertTime(timestring){
     var time=0;
     switch (timestring) {
@@ -35,8 +42,56 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
       }
       return time;
   }
+  function sortPlayers(){
+    for(var i=0; i<data.players.length; i++){
+      var position=data.players[i].position;
+      switch (position) {
+        case "QB":
+          data.qbs.push(data.players[i])
+          break;
+        case "RB":
+          data.rbs.push(data.players[i])
+          break;
+        case "WR":
+          data.wrs.push(data.players[i])
+          break;
+        case "TE":
+          data.tes.push(data.players[i])
+          break;
+        case "K":
+          data.kicks.push(data.players[i])
+          break;
+        case "DEF":
+          data.defs.push(data.players[i])
+          break;
+    }
+  }
+}
+function setTeamInfo(){
+  for (var i=0; i<data.setTeams.length; i++){
+    var team ={};
+    team.teamName = data.setTeams[i];
+    team.cash = data.cash;
+    team.teamList=[];
+    data.teamInfo.push(team);
+  }
+}
+  function getPlayers(){
+    $http.get('/players').then(handleSuccess, handleFailure);
+  }
+  function handleSuccess(res){
+    data.players = res.data
+    console.log(data.players);
+  }
+  function handleFailure(res){
+    console.log('/players fail', res);
+  }
+  getPlayers();
   return {
     data: data,
-    convertTime: convertTime
+    convertTime: convertTime,
+    getPlayers: getPlayers,
+    sortPlayers: sortPlayers,
+    setTeamInfo: setTeamInfo
   }
 }])

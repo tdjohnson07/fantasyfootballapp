@@ -17,13 +17,6 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
     }
     console.log(vm.setTeams);
   }
-  vm.confirm = function(){
-    console.log(vm.setTeams);
-    console.log(vm.idp);
-    console.log(vm.selectedRounds);
-    console.log(vm.randomize);
-    console.log(DataService.data.draftType);
-  }
   vm.start = function(){
     DataService.data.setTeams= vm.setTeams;
     DataService.data.idp=vm.idp;
@@ -32,11 +25,14 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
     DataService.data.draftName = vm.draftName;
     if(DataService.data.draftType === "auction"){
       DataService.data.cash=vm.cash;
+        DataService.setTeamInfo();
       $location.path('/auction');
     }
     else if(DataService.data.draftType === "snake"){
       DataService.data.pickTime = DataService.convertTime(vm.pickTime);
+        DataService.setTeamInfo();
       $location.path('/snake');
     }
   }
+  DataService.sortPlayers();
 }]);

@@ -7,6 +7,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var User = require('./models/user');
 var register = require('./routes/register');
 var login = require('./routes/login');
+var players = require('./routes/players');
 var app=express();
 
 app.use(session({
@@ -54,6 +55,7 @@ app.use(express.static('public'));
 app.use('/', index);
 app.use('/register', register);
 app.use('/login', login);
+app.use('/players', players);
 
 var server=app.listen(3000, function(){
   var port=server.address().port;
