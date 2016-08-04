@@ -76,6 +76,44 @@ function setTeamInfo(){
     data.teamInfo.push(team);
   }
 }
+function locateArray(position){
+  var playerArray=[];
+  switch (position) {
+    case "QB":
+      playerArray=data.qbs;
+      break;
+    case "RB":
+      playerArray=data.rbs;
+      break;
+    case "WR":
+      playerArray=data.wrs;
+      break;
+    case "TE":
+      playerArray=data.tes;
+      break;
+    case "K":
+      playerArray=data.kicks;
+      break;
+    case "DEF":
+      playerArray=data.defs;
+      break;
+    case "ALL":
+      playerArray=data.players;
+  }
+  return playerArray;
+}
+function findTeamInfo(team){
+  var index = 0;
+  console.log(team);
+  console.log(data.setTeams);
+  for (var i=0; i<data.setTeams.length; i++){
+    if(team==data.setTeams[i]){
+      index = i;
+      console.log('found match');
+    }
+  }
+  return index;
+}
   function getPlayers(){
     $http.get('/players').then(handleSuccess, handleFailure);
   }
@@ -92,6 +130,8 @@ function setTeamInfo(){
     convertTime: convertTime,
     getPlayers: getPlayers,
     sortPlayers: sortPlayers,
-    setTeamInfo: setTeamInfo
+    setTeamInfo: setTeamInfo,
+    locateArray: locateArray,
+    findTeamInfo: findTeamInfo
   }
 }])

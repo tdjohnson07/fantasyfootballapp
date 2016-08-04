@@ -5,3 +5,7 @@
 .displayList{
   float: left;
 }
+.narrowList{
+  display: inline;
+  color: blue;
+}

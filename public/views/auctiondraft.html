@@ -1,10 +1,23 @@
 <h2>{{auction.data.draftName}}</h2>
+<h3>{{auction.selectedPlayer.displayname}} {{auction.selectedPlayer.position}}
+    {{auction.selectedPlayer.team}}</h3>
+<select name="dratedTeam" ng-model="auction.selectedTeam">
+  <option ng-repeat="team in auction.data.setTeams" value={{team}}>{{team}}</option>
+</select>
+<label for="amount">Enter Amount:</label>
+<input type="number" ng-model="auction.amount" id="amount" />
+<button ng-click="auction.draft()">Draft Player</button>
 <label for="Search">Search by Name:</label>
 <input type="text" ng-model="auction.searchInput" id="search" />
 <button ng-click="auction.search">Search</button>
 <div class="displayList">
+  <div>
+    <p class="narrowList" ng-repeat="position in auction.positions" ng-click="auction.narrow(position)">
+      {{position}}
+    </p>
+  </div>
   <ul>
-    <li ng-repeat="player in auction.displayList track by $index">
+    <li ng-repeat="player in auction.displayList track by $index" ng-click="auction.selectPlayer(player)">
       {{player.displayname}} {{player.position}} {{player.team}}
     </li>
   </ul>
@@ -14,5 +27,10 @@
   <div class="teams" ng-repeat="team in auction.data.setTeams track by $index">
     <h3>{{team}}</h3>
     <h4>${{auction.data.teamInfo[$index].cash}}</h4>
+    <ul>
+      <li ng-repeat="player in auction.data.teamInfo[$index].teamList">
+        {{player.displayname}} {{player.position}} {{player.team}}
+      </li>
+    </ul>
   </div>
 </div>
