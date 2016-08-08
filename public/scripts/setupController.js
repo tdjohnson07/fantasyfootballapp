@@ -23,6 +23,9 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
     DataService.data.selectedRounds=vm.selectedRounds;
     DataService.data.randomize=vm.randomize;
     DataService.data.draftName = vm.draftName;
+    if(vm.setTeams.length === 0){
+      vm.getNum();
+    }
     if(DataService.data.draftType === "auction"){
       DataService.data.cash=vm.cash;
         DataService.setTeamInfo();

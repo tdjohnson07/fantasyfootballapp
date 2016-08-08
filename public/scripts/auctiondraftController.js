@@ -30,6 +30,13 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
     var index=DataService.findTeamInfo(vm.selectedTeam);
     vm.data.teamInfo[index].teamList.push(vm.selectedPlayer);
     vm.data.teamInfo[index].cash-=vm.amount;
+    var location = vm.data.players.indexOf(vm.selectedPlayer);
+    var playerArray=DataService.locateArray(vm.selectedPlayer.position);
+    var locationTwo = playerArray.indexOf(vm.selectedPlayer);
+    vm.data.players.splice(location, 1);
+    DataService.locateArray(vm.selectedPlayer.position).splice(locationTwo, 1);
+    getDisplayList(currentDisplay, displayIndex);
+    console.log(location, locationTwo);
   }
   console.log(vm.data.teamInfo);
   getDisplayList(vm.data.players, displayIndex);

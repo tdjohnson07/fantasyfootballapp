@@ -8,8 +8,12 @@
 <input type="number" ng-model="auction.amount" id="amount" />
 <button ng-click="auction.draft()">Draft Player</button>
 <label for="Search">Search by Name:</label>
-<input type="text" ng-model="auction.searchInput" id="search" />
-<button ng-click="auction.search">Search</button>
+<input type="text" ng-model="searchInput" id="search" />
+<ul>
+  <li ng-show="searchInput" ng-repeat="player in auction.data.players | filter:{lname: searchInput} | limitTo: 5"  ng-click="auction.selectPlayer(player)">
+    {{player.displayname}}
+  </li>
+</ul>
 <div class="displayList">
   <div>
     <p class="narrowList" ng-repeat="position in auction.positions" ng-click="auction.narrow(position)">
