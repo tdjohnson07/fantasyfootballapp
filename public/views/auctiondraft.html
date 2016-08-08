@@ -1,4 +1,5 @@
 <h2>{{auction.data.draftName}}</h2>
+<h3 ng-hide="auction.playerSelected">Select a Player</h3>
 <h3>{{auction.selectedPlayer.displayname}} {{auction.selectedPlayer.position}}
     {{auction.selectedPlayer.team}}</h3>
 <select name="dratedTeam" ng-model="auction.selectedTeam">
@@ -9,6 +10,7 @@
 <button ng-click="auction.draft()">Draft Player</button>
 <label for="Search">Search by Name:</label>
 <input type="text" ng-model="searchInput" id="search" />
+<h4>{{auction.displayMessage}}</h4>
 <ul>
   <li ng-show="searchInput" ng-repeat="player in auction.data.players | filter:{lname: searchInput} | limitTo: 5"  ng-click="auction.selectPlayer(player)">
     {{player.displayname}}
@@ -25,7 +27,8 @@
       {{player.displayname}} {{player.position}} {{player.team}}
     </li>
   </ul>
-  <button ng-click="auction.nextDisplay()">Next</button>
+  <button ng-show="auction.endList" ng-click="auction.prevDisplay()">Prev</button>
+  <button ng-show="auction.startList"ng-click="auction.nextDisplay()">Next</button>
 </div>
 <div>
   <div class="teams" ng-repeat="team in auction.data.setTeams track by $index">

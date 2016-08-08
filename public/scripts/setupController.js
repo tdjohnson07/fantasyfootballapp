@@ -26,14 +26,21 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
     if(vm.setTeams.length === 0){
       vm.getNum();
     }
+    if(vm.randomize){
+      DataService.data.setTeams = DataService.randomize(DataService.data.setTeams);
+    }
     if(DataService.data.draftType === "auction"){
       DataService.data.cash=vm.cash;
-        DataService.setTeamInfo();
+      DataService.setTeamInfo();
       $location.path('/auction');
     }
     else if(DataService.data.draftType === "snake"){
       DataService.data.pickTime = DataService.convertTime(vm.pickTime);
-        DataService.setTeamInfo();
+      DataService.setTeamInfo();
+      DataService.setDraftOrder(vm.setTeams, vm.selectedRounds);
+      if(vm.selectedRounds%2===0){
+        vm.setTeams.reverse();
+      }
       $location.path('/snake');
     }
   }

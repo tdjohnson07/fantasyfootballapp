@@ -13,6 +13,7 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
   data.kicks=[];
   data.defs=[];
   data.teamInfo=[];
+  data.draftOrder=[];
   function convertTime(timestring){
     var time=0;
     switch (timestring) {
@@ -114,6 +115,28 @@ function findTeamInfo(team){
   }
   return index;
 }
+function addToDraftOrder(teamArray){
+  for(var i=0; i<teamArray.length; i++){
+    data.draftOrder.push(teamArray[i]);
+  }
+}
+function setDraftOrder(teamArray, rounds){
+  addToDraftOrder(teamArray);
+  for(var i=0; i<rounds-1; i++){
+    teamArray.reverse();
+    addToDraftOrder(teamArray);
+  }
+}
+function randomize(teamArray){
+  for(var i=teamArray.length-1; i>0; i--){
+    var ranIndex=Math.floor(Math.random()*(teamArray.length))
+    var temp = teamArray[i];
+    teamArray[i]=teamArray[ranIndex];
+    teamArray[ranIndex]=temp;
+  }
+  console.log(teamArray);
+  return teamArray;
+}
   function getPlayers(){
     $http.get('/players').then(handleSuccess, handleFailure);
   }
@@ -132,6 +155,8 @@ function findTeamInfo(team){
     sortPlayers: sortPlayers,
     setTeamInfo: setTeamInfo,
     locateArray: locateArray,
-    findTeamInfo: findTeamInfo
+    findTeamInfo: findTeamInfo,
+    setDraftOrder: setDraftOrder,
+    randomize: randomize
   }
 }])

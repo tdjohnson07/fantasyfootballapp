@@ -1,9 +1,17 @@
 .teams{
-  width: 100px;
+  width: 150px;
   display: inline-block;
+  text-align: center;
+}
+.teams li{
+  list-style: none;
+  float: left;
 }
 .displayList{
-  float: left;
+  float: right;
+}
+.displayList li{
+  list-style: none;
 }
 .narrowList{
   display: inline;
