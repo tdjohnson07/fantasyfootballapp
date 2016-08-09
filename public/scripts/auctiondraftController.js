@@ -61,6 +61,10 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
       vm.displayMessage = "Roster Full"
       return;
     }
+    if(!vm.amount){
+      vm.displayMessage = "No Amount Entered";
+      return;
+    }
     vm.data.teamInfo[index].teamList.push(vm.selectedPlayer);
     vm.data.teamInfo[index].cash-=vm.amount;
     var location = vm.data.players.indexOf(vm.selectedPlayer);
@@ -72,7 +76,11 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
     vm.playerSelected=false;
     vm.displayMessage = vm.selectedPlayer.displayname + " added to " + vm.data.teamInfo[index].teamName;
     vm.selectedPlayer = {};
+    vm.amount= null;
     console.log(location, locationTwo);
+  }
+  vm.saveDraft = function (){
+    DataService.sendDraft();
   }
   console.log(vm.data.teamInfo);
   getDisplayList(vm.data.players, displayIndex);

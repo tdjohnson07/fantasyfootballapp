@@ -8,6 +8,7 @@ var User = require('./models/user');
 var register = require('./routes/register');
 var login = require('./routes/login');
 var players = require('./routes/players');
+var save = require('./routes/save');
 var app=express();
 
 app.use(session({
@@ -56,6 +57,7 @@ app.use('/', index);
 app.use('/register', register);
 app.use('/login', login);
 app.use('/players', players);
+app.use('/save', save);
 
 var server=app.listen(3000, function(){
   var port=server.address().port;

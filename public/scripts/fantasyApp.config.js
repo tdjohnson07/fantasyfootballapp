@@ -32,7 +32,7 @@ angular.module('fantasyApp').config(['$routeProvider', '$locationProvider', func
       css: '/styles/style.css'
     })
     .when('/snake', {
-      templateUrl: '/views/snakedraft.html',
+      templateUrl: '/views/snake.html',
       controller: 'snakedraftController',
       controllerAs: 'snake'
     })

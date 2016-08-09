@@ -14,6 +14,7 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
   data.defs=[];
   data.teamInfo=[];
   data.draftOrder=[];
+  var lastsaved;
   function convertTime(timestring){
     var time=0;
     switch (timestring) {
@@ -147,6 +148,26 @@ function randomize(teamArray){
   function handleFailure(res){
     console.log('/players fail', res);
   }
+  function sendDraft(){
+    var sendData = {};
+    var date = new Date();
+    lastsaved = date;
+    sendData.date = date;
+    sendData.draftname = data.draftName;
+    $http.post('/save', sendData).then(getDraftId, failure);
+  }
+  function getDraftId(){
+    var sendData = {};
+    sendData.date = lastsaved;
+    $http.post('/save/getdraft', sendData).then(success, failure);
+  }
+  function success(res){
+    console.log(res);
+    console.log('success');
+  }
+  function failure(res){
+    console.log(failure);
+  }
   getPlayers();
   return {
     data: data,
@@ -157,6 +178,7 @@ function randomize(teamArray){
     locateArray: locateArray,
     findTeamInfo: findTeamInfo,
     setDraftOrder: setDraftOrder,
-    randomize: randomize
+    randomize: randomize,
+    sendDraft: sendDraft
   }
 }])
