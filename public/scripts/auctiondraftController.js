@@ -9,6 +9,8 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
   vm.endList=false;
   vm.startList=true;
   vm.playerSelected = false;
+  vm.draftComplete = false;
+  vm.draftSaved = false;
   var currentDisplay=vm.data.players;
   var displayIndex =0;
   function getDisplayList(playerArray, index){
@@ -79,8 +81,13 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
     vm.amount= null;
     console.log(location, locationTwo);
   }
-  vm.saveDraft = function (){
+  vm.completeDraft = function (){
+    vm.draftComplete=true;
     DataService.sendDraft();
+  }
+  vm.saveDraft = function(){
+    vm.draftSaved = true;
+    DataService.saveDraft();
   }
   console.log(vm.data.teamInfo);
   getDisplayList(vm.data.players, displayIndex);

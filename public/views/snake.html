@@ -1,4 +1,7 @@
 <h2>{{snake.data.draftName}}</h2>
+<button ng-hide="snake.draftComplete" ng-click="snake.completeDraft()">Draft complete</button>
+<button ng-show="snake.draftComplete" ng-click="snake.saveDraft()">Save Draft</button>
+<h3 ng-show="auction.draftSaved">Draft Saved</h3>
 <div class="container">
   <div class="row">
     <div class="col-md-3">

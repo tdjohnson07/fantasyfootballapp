@@ -23,6 +23,7 @@ function CreateUser(username, password, callback){
         done();
         return callback(err);
       }
+      done();
       callback(null);
     })
     })
@@ -41,6 +42,7 @@ function findByUsername(username, callback){
         return callback(err);
       }
       else{
+        done();
         callback(null, result.rows[0]);
       }
     });
@@ -59,6 +61,7 @@ function findById(id, callback){
           done();
           return callback(err);
         }
+        done();
         callback(null, result.rows[0]);
     })
   })

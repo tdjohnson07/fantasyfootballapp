@@ -12,8 +12,8 @@ router.post('/', function(req, res){
   })
 });
 router.post('/getdraft', function(req, res){
-    console.log(req.body);
-    console.log(req.user);
+    // console.log(req.body);
+    // console.log(req.user);
     savedraft.getId(req.user.id, req.body.date, function(err, result){
       if(err){
         console.log("get draft id error", err);
@@ -23,5 +23,35 @@ router.post('/getdraft', function(req, res){
       }
     })
 });
-
+router.post('/sendteams', function(req, res){
+  // console.log(req.body);
+    savedraft.sendTeams(req.body.draftid, req.body.teamname, function(err, result){
+      if(err){
+        console.log('sendTeams error', err);
+      }
+      else{
+        res.send(result);
+      }
+    })
+});
+router.post('/getteamids', function(req, res){
+  savedraft.getTeamIds(req.body.draftid, function(err, result){
+    if(err){
+      console.log('getTeamIds error', err);
+    }
+    else{
+      res.send(result);
+    }
+  });
+})
+router.post('/addplayer', function(req, res){
+  savedraft.sendPlayers(req.body.draftid, req.body.teamid, req.body.playerid, function(err, result){
+    if(err){
+      console.log('addplayer error', err);
+    }
+    else{
+      res.send(result);
+    }
+  })
+})
 module.exports = router;

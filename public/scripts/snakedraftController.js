@@ -13,6 +13,8 @@ angular.module('fantasyApp').controller('snakedraftController',['$location', 'Da
   vm.endList=false;
   vm.startList=true;
   vm.playerSelected = false;
+  vm.draftComplete = false;
+  vm.draftSaved = false;
   var currentDisplay=vm.data.players;
   var displayIndex =0;
   function getDisplayList(playerArray, index){
@@ -76,6 +78,14 @@ angular.module('fantasyApp').controller('snakedraftController',['$location', 'Da
     vm.inTheHole = vm.data.draftOrder[selectedTeamIndex+2];
     console.log(location, locationTwo);
 
+  }
+  vm.completeDraft = function (){
+    vm.draftComplete=true;
+    DataService.sendDraft();
+  }
+  vm.saveDraft = function(){
+    vm.draftSaved = true;
+    DataService.saveDraft();
   }
   console.log(vm.data.teamInfo);
   getDisplayList(vm.data.players, displayIndex);

@@ -15,6 +15,7 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
   data.teamInfo=[];
   data.draftOrder=[];
   var lastsaved;
+  var mostRecentDraftId;
   function convertTime(timestring){
     var time=0;
     switch (timestring) {
@@ -106,12 +107,9 @@ function locateArray(position){
 }
 function findTeamInfo(team){
   var index = 0;
-  console.log(team);
-  console.log(data.setTeams);
   for (var i=0; i<data.setTeams.length; i++){
     if(team==data.setTeams[i]){
       index = i;
-      console.log('found match');
     }
   }
   return index;
@@ -159,14 +157,52 @@ function randomize(teamArray){
   function getDraftId(){
     var sendData = {};
     sendData.date = lastsaved;
-    $http.post('/save/getdraft', sendData).then(success, failure);
+    $http.post('/save/getdraft', sendData).then(sendTeams, failure);
+  }
+  function sendTeams(res){
+    var draftid = res.data.rows[0].id;
+    mostRecentDraftId = draftid;
+    for(var i=0; i<data.teamInfo.length; i++){
+      var sendData = {};
+      sendData.draftid = draftid;
+      sendData.teamname=data.teamInfo[i].teamName;
+      $http.post('/save/sendteams', sendData).then(success, failure);
+    }
+  }
+  function saveDraft(){
+    var sendData = {};
+    sendData.draftid = mostRecentDraftId;
+    $http.post('/save/getteamids', sendData).then(addPlayers, failure);
+  }
+  function addPlayers(res){
+    console.log(res);
+    console.log(data.teamInfo);
+    for(var i=0; i<res.data.rows.length; i++){
+      var team = res.data.rows[i].teamname;
+      var id = res.data.rows[i].id;
+      findTeamAndAddPlayers(team, id);
+    }
+  }
+  function findTeamAndAddPlayers(team, id){
+    console.log(data.teamInfo);
+    for(var i=0; i<data.teamInfo.length; i++){
+      if(team == data.teamInfo[i].teamName){
+        for(var j=0; j<data.teamInfo[i].teamList.length; j++){
+          var sendData={};
+          console.log(i);
+          sendData.draftid= mostRecentDraftId;
+          sendData.teamid = id;
+          sendData.playerid = data.teamInfo[i].teamList[j].id
+          $http.post('/save/addplayer', sendData).then(success, failure);
+        }
+      }
+    }
   }
   function success(res){
-    console.log(res);
     console.log('success');
   }
   function failure(res){
-    console.log(failure);
+    console.log('failure');
   }
   getPlayers();
   return {
@@ -179,6 +215,7 @@ function randomize(teamArray){
     findTeamInfo: findTeamInfo,
     setDraftOrder: setDraftOrder,
     randomize: randomize,
-    sendDraft: sendDraft
+    sendDraft: sendDraft,
+    saveDraft: saveDraft
   }
 }])

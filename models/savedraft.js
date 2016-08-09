@@ -18,9 +18,10 @@ function createDraft(userid, date, draftname, callback){
       if(err){
         console.log('insert draft error', err);
         done();
-        callback(err);
+        return callback(err);
       }
-      callback(null, result);
+      done();
+      return callback(null, result);
     })
   })
 }
@@ -29,20 +30,81 @@ function getId(userid, date, callback){
     if(err){
       console.log('getID error', err);
       done();
-      callback(err);
+      return callback(err);
     }
     client.query("SELECT * FROM drafts WHERE userid=$1 AND date=$2",
   [userid, date], function(err, result){
     if(err){
       console.log("select id error", err);
       done();
-      callback(err);
+      return callback(err);
     }
-    callback(null, result);
+    done();
+    return callback(null, result);
   })
+  })
+}
+function sendTeams(draftid, teamname, callback){
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log("sendteam connect error", err);
+      done();
+      return callback(err);
+    }
+    client.query("INSERT INTO teams (draftid, teamname) VALUES ($1, $2)",
+    [draftid, teamname], function(err, result){
+      if(err){
+        console.log("insert teams error", err);
+        done();
+        return callback(err);
+      }
+      done();
+      return callback(null, result);
+    })
+  })
+}
+function getTeamIds(draftid, callback){
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log("getteamids connect error", err);
+      done();
+      return callback(err);
+    }
+    client.query("SELECT * FROM teams where draftid=$1",[draftid],
+    function(err, result){
+      if(err){
+        console.log("get teams query error", err);
+        done();
+        return callback(err);
+      }
+      done();
+      callback(null, result);
+    })
+  })
+}
+function sendPlayers(draftid, teamid, playerid, callback){
+  pool.connect(function(err, client, done){
+    if(err){
+      console.log("sendPlayers connect error", err);
+      done();
+      return callback(err);
+    }
+    client.query("INSERT INTO draftedplayers (draftid, teamid, playerid) VALUES ($1, $2, $3)",
+    [draftid, teamid, playerid],function(err, result){
+      if(err){
+        console.log("insert sendplayers error", err);
+        done();
+        return callback(err);
+      }
+      done();
+      return callback(null, result);
+    })
   })
 }
 module.exports = {
   createDraft: createDraft,
-  getId: getId
+  getId: getId,
+  sendTeams: sendTeams,
+  getTeamIds: getTeamIds,
+  sendPlayers: sendPlayers
 }
