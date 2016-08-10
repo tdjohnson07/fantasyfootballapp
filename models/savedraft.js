@@ -6,15 +6,15 @@ var config = {
   idleTimeoutMillis: 30000
 };
 var pool = new pg.Pool(config);
-function createDraft(userid, date, draftname, callback){
+function createDraft(userid, date, draftname, numofteams, numofrounds, callback){
   pool.connect(function(err, client, done){
     if(err){
       console.log('createdraft save err', err);
       done();
       return callback(err);
     }
-    client.query("INSERT INTO drafts (userid, date, draftname) VALUES ($1, $2, $3)",
-    [userid, date, draftname], function(err, result){
+    client.query("INSERT INTO drafts (userid, date, draftname, numberofteams, numberofrounds) VALUES ($1, $2, $3, $4, $5)",
+    [userid, date, draftname, numofteams, numofrounds], function(err, result){
       if(err){
         console.log('insert draft error', err);
         done();

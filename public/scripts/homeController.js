@@ -3,13 +3,17 @@ angular.module('fantasyApp').controller('homeController', ['$http','$location', 
   vm.data = DataService.data;
   vm.auction = function(){
     DataService.data.draftType="auction";
+    DataService.data.loggedIn = true;
     $location.path('/setup');
   }
   vm.snake = function(){
     DataService.data.draftType="snake";
+    DataService.data.loggedIn = true;
     $location.path('/setup');
   }
   vm.viewPrevious = function(){
+    DataService.getDrafts();
+    DataService.data.loggedIn = true;
     $location.path('/prevSelect');
   }
 }]);

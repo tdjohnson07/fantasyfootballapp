@@ -1,0 +1,14 @@
+<a href="/home">Home page</a>
+<h2>{{prevView.data.selectedDraft.draftname}}</h2>
+<div class = "container">
+  <div class = "row">
+    <div class="col-md-1" ng-repeat="team in prevView.data.teams track by $index">
+      <h3>{{team[0].teamname}}</h3>
+      <ul>
+        <li ng-repeat="player in prevView.data.teams[$index]">
+          {{player.displayname}} {{player.position}} {{player.team}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,7 @@ var router = require('express').Router();
 var savedraft = require('../models/savedraft');
 
 router.post('/', function(req, res){
-  savedraft.createDraft(req.user.id, req.body.date, req.body.draftname, function(err, result){
+  savedraft.createDraft(req.user.id, req.body.date, req.body.draftname, req.body.numofteams, req.body.numofrounds, function(err, result){
     if(err){
       console.log("save draft route error in createDraft", err);
     }

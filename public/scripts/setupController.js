@@ -7,6 +7,7 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
   vm.idp=false;
   vm.selectedRounds= 0;
   vm.randomize=false;
+  vm.dispaly=false;
   if(DataService.data.draftType === "auction"){
       vm.auctionTrue = true;
   }
@@ -26,11 +27,31 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
     if(vm.setTeams.length === 0){
       vm.getNum();
     }
+    if(vm.selectedNum== undefined){
+      vm.display= true;
+      vm.displayMessage = "Please Select Number of teams";
+      return;
+    }
+    if(!vm.draftName){
+      vm.display= true;
+      vm.displayMessage = "Please Enter a name for your draft";
+      return;
+    }
+    if(vm.selectedRounds===0){
+      vm.display = true;
+      vm.displayMessage = "Please Select Number of Rounds";
+      return;
+    }
     if(vm.randomize){
       DataService.data.setTeams = DataService.randomize(DataService.data.setTeams);
     }
     if(DataService.data.draftType === "auction"){
       DataService.data.cash=vm.cash;
+      if(vm.cash == undefined){
+        vm.display = true;
+        vm.displayMessage = "Please Enter Starting Cash for each Team";
+        return;
+      }
       DataService.setTeamInfo();
       $location.path('/auction');
     }

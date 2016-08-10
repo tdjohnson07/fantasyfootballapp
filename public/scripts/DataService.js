@@ -14,6 +14,11 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
   data.defs=[];
   data.teamInfo=[];
   data.draftOrder=[];
+  data.prevDrafts =[];
+  data.selectedDraft={};
+  data.draftToView=[];
+  data.teams=[];
+  data.loggedIn = false;
   var lastsaved;
   var mostRecentDraftId;
   function convertTime(timestring){
@@ -152,6 +157,8 @@ function randomize(teamArray){
     lastsaved = date;
     sendData.date = date;
     sendData.draftname = data.draftName;
+    sendData.numofteams = data.setTeams.length;
+    sendData.numofrounds = data.selectedRounds;
     $http.post('/save', sendData).then(getDraftId, failure);
   }
   function getDraftId(){
@@ -204,6 +211,29 @@ function randomize(teamArray){
   function failure(res){
     console.log('failure');
   }
+  function getDrafts(){
+    $http.get('/drafts').then(getDraftsSuccess, failure);
+  }
+  function getDraftsSuccess(res){
+    data.prevDrafts=res.data.rows;
+    console.log(data.prevDrafts);
+    console.log('success');
+  }
+  function getCurrentDraft(draft){
+    data.draftToView=[];
+    data.teams=[];
+    var sendData={};
+    sendData.draft = draft;
+    $http.post('/drafts/getCurrent', sendData).then(getCurrentSucess, failure);
+  }
+  function getCurrentSucess(res){
+    console.log(res.data.rows);
+    data.draftToView=res.data.rows;
+    while(data.draftToView.length!= 0){
+      data.teams.push(data.draftToView.splice(0,data.selectedDraft.numberofrounds));
+    }
+    console.log(data.teams);
+  }
   getPlayers();
   return {
     data: data,
@@ -216,6 +246,8 @@ function randomize(teamArray){
     setDraftOrder: setDraftOrder,
     randomize: randomize,
     sendDraft: sendDraft,
-    saveDraft: saveDraft
+    saveDraft: saveDraft,
+    getDrafts: getDrafts,
+    getCurrentDraft: getCurrentDraft
   }
-}])
+}]);

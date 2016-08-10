@@ -29,12 +29,17 @@ angular.module('fantasyApp').config(['$routeProvider', '$locationProvider', func
       templateUrl: '/views/auctionDraft.html',
       controller: 'auctiondraftController',
       controllerAs: 'auction',
-      css: '/styles/style.css'
+      // css: '/styles/style.css'
     })
     .when('/snake', {
       templateUrl: '/views/snake.html',
       controller: 'snakedraftController',
       controllerAs: 'snake'
+    })
+    .when('/draftview',{
+      templateUrl: '/views/previousdraftview.html',
+      controller: 'previousdraftviewController',
+      controllerAs: 'prevView'
     })
     $locationProvider.html5Mode(true);
 }]);

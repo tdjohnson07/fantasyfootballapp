@@ -1,0 +1,6 @@
+<a href="/home">Home page</a>
+<ul>
+  <li ng-click="prevSel.goToDraft(draft)" ng-repeat="draft in prevSel.data.prevDrafts track by $index">
+    {{draft.draftname}}      {{draft.date}}
+  </li>
+</ul>
