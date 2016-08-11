@@ -3,6 +3,12 @@ body{
 }
 header {
   text-align: center;
+  background-image: url("../images/tweed.png");
+  height: 100px;
+}
+header h1{
+  padding-top: 20px;
+  color: burlywood;
 }
 .loginContent{
   width: 60%;
@@ -13,11 +19,91 @@ header {
 }
 .home{
   width: 60%;
-  margin: 50px auto;
+  margin: 30px auto;
   text-align: center;
+}
+.setupheader{
+  text-align: center;
+  margin-top: 15px;
 }
 .setup{
   width: 60%;
   margin: 5% auto;
   text-align: center;
+}
+.draftname{
+  text-align: center;
+}
+.teams{
+  border: 1px solid black;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+.teams ul{
+  float: left;
+  padding-left:2px;
+}
+.teamlist{
+
+  width:90px;
+  margin: 0 20px 0 0;
+list-style: none;
+display: flex;
+justify-content: center;
+text-align: center;
+overflow: scroll;
+border: 1px solid black;
+font-weight: bold;
+/*text-shadow: 2px 2px white;*/
+}
+.QB{
+  background-color: lightblue;
+}
+.WR{
+  background-color: lightgreen;
+}
+.RB{
+  background-color: #BF5FFF;
+}
+.TE{
+  background-color: yellow;
+}
+.DEF{
+  background-color: orange;
+}
+.K{
+  background-color: pink;
+}
+.playerlist{
+  margin-top: 10px;
+  background-image: url("../images/tweed.png");
+}
+.playerlist li{
+  list-style: none;
+  color: burlywood;
+  cursor: pointer;
+}
+.narrowList{
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.search {
+  margin-top: 10px;
+}
+.search li{
+  list-style: none;
+  cursor: pointer;
+}
+.clock li{
+  display: inline;
+}
+.prev{
+  width: 60%;
+  margin: 0 auto;
+}
+.prev li{
+  font-size: 30px;
+  cursor: pointer;
 }

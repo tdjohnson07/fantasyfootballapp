@@ -1,6 +1,7 @@
 <a href="/home">Home page</a>
-<ul>
+<h2 class="draftname">Select Draft to View</h2>
+<ul class="prev">
   <li ng-click="prevSel.goToDraft(draft)" ng-repeat="draft in prevSel.data.prevDrafts track by $index">
-    {{draft.draftname}}      {{draft.date}}
+    {{draft.draftname}}      {{draft.date | date:"short"}}
   </li>
 </ul>

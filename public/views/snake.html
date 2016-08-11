@@ -1,8 +1,21 @@
 <a href="/home">Home page</a>
-<h2>{{snake.data.draftName}}</h2>
-<button ng-hide="snake.draftComplete" ng-click="snake.completeDraft()">Draft complete</button>
-<button ng-show="snake.draftComplete" ng-click="snake.saveDraft()">Save Draft</button>
-<h3 ng-show="auction.draftSaved">Draft Saved</h3>
+<h2 class="draftname">{{snake.data.draftName}}</h2>
+<ul class="clock">
+<li><button ng-click="snake.startCountdown()">Start Clock</button></li>
+<li><h3>{{snake.minutes}}:{{snake.seconds}}</h3></li>
+</ul>
+<div class="container">
+  <div class="row">
+    <div class="teams col-md-1 col-lg-1" ng-repeat="team in snake.data.setTeams track by $index">
+      <h3>{{team}}</h3>
+      <ul>
+        <li class="teamlist {{player.position}}" ng-repeat="player in snake.data.teamInfo[$index].teamList">
+          {{player.displayname}} {{player.position}} {{player.team}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
 <div class="container">
   <div class="row">
     <div class="col-md-3">
@@ -14,10 +27,17 @@
         <h4>Up Next: {{snake.onDeck}}</h4>
         <h4>Up After: {{snake.inTheHole}}</h4>
         <h4>{{snake.displayMessage}}</h4>
-        <h3>{{snake.countDownLeft}}</h3>
-        <button ng-click="snake.startCountdown()">start Clock</button>
+        <h4 ng-show="snake.missed">Select Team</h4>
+        <select ng-show="snake.missed" name="draftedTeam" ng-model="snake.missedTeam" id="draftedTeam">
+          <option ng-repeat="team in snake.missedPicks track by $index" value={{team}}>{{team}}</option>
+        </select>
+        <button ng-show="snake.missed" ng-click="snake.makeMissed()">Make missed pick</button>
+        <br>
+        <button ng-hide="snake.draftComplete" ng-click="snake.completeDraft()">Draft complete</button>
+        <button ng-show="snake.draftComplete" ng-click="snake.saveDraft()">Save Draft</button>
+        <h3 ng-show="snake.draftSaved">Draft Saved</h3>
     </div>
-    <div class="col-md-4">
+    <div class="search col-md-4">
       <label for="Search">Search by Name:</label>
       <input type="text" ng-model="searchInput" id="search" />
       <ul>
@@ -25,13 +45,8 @@
           {{player.displayname}}
         </li>
       </ul>
-      <h4 ng-show="snake.missed">Select Team</h4>
-      <select ng-show="snake.missed" name="draftedTeam" ng-model="snake.missedTeam" id="draftedTeam">
-        <option ng-repeat="team in snake.missedPicks track by $index" value={{team}}>{{team}}</option>
-      </select>
-      <button ng-show="snake.missed" ng-click="snake.makeMissed()">Make missed pick</button>
     </div>
-    <div class="col-md-4">
+    <div class="playerlist col-md-4">
       <div class="row">
         <p class="narrowList col-md-1" ng-repeat="position in snake.positions" ng-click="snake.narrow(position)">
           {{position}}
@@ -46,15 +61,3 @@
       <button ng-show="snake.startList"ng-click="snake.nextDisplay()">Next</button>
     </div>
   </div>
-<div class="container">
-  <div class="row">
-    <div class="teams col-md-1" ng-repeat="team in snake.data.setTeams track by $index">
-      <h3>{{team}}</h3>
-      <ul>
-        <li ng-repeat="player in snake.data.teamInfo[$index].teamList">
-          {{player.displayname}} {{player.position}} {{player.team}}
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>

@@ -13,7 +13,7 @@ router.post('/', function(req, res){
       res.sendStatus(500);
     }
     else{
-      res.redirect('/');
+      res.sendStatus(200);
     }
   });
 });

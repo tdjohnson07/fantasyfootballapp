@@ -1,4 +1,4 @@
-angular.module('fantasyApp').controller('registerController',['$http', function($http){
+angular.module('fantasyApp').controller('registerController',['$http','$location', function($http, $location){
   var vm=this;
   vm.username='';
   vm.password='';
@@ -12,6 +12,7 @@ angular.module('fantasyApp').controller('registerController',['$http', function(
   }
   function handleSuccess(res){
     console.log('success adding user', res);
+    $location.path('/home')
   }
   function handleFailure(res){
     console.log('failed to add user', res);

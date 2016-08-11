@@ -82,6 +82,12 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
     console.log(location, locationTwo);
   }
   vm.completeDraft = function (){
+    for(var i=0; i<vm.data.setTeams.length; i++){
+      if(vm.data.teamInfo[i].teamList.length<parseInt(vm.data.selectedRounds)){
+        vm.displayMessage="Please Fill rosters before completing";
+        return;
+      }
+    }
     vm.draftComplete=true;
     DataService.sendDraft();
   }

@@ -22,7 +22,6 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
   var displayIndex =0;
   vm.startCountdown = function(){
   	vm.timerCount = vm.data.pickTime;
-
   	var countDown = function () {
   		if (vm.timerCount < 0) {
   		  //Any desired function upon countdown end.
@@ -36,11 +35,15 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
         vm.startCountdown();
   		} else {
   		  vm.countDownLeft = vm.timerCount;
+        vm.minutes=Math.floor(vm.timerCount/60);
+        vm.seconds=vm.timerCount-(vm.minutes*60);
   		  vm.timerCount--;
   		  $timeout(countDown, 1000);
   		}
   	};
   	vm.countDownLeft = vm.timerCount;
+    vm.minutes=Math.floor(vm.timerCount/60);
+    vm.seconds=vm.timerCount-(vm.minutes*60);
   	countDown();
   }
   function getDisplayList(playerArray, index){
@@ -126,6 +129,12 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     vm.timerCount=vm.data.pickTime;
   }
   vm.completeDraft = function (){
+    for(var i=0; i<vm.data.setTeams.length; i++){
+      if(vm.data.teamInfo[i].teamList.length<parseInt(vm.data.selectedRounds)){
+        vm.displayMessage="Please Fill Rosters Before Completing";
+        return;
+      }
+    }
     vm.draftComplete=true;
     DataService.sendDraft();
   }
