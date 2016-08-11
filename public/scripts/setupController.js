@@ -7,7 +7,7 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
   vm.idp=false;
   vm.selectedRounds= 0;
   vm.randomize=false;
-  vm.dispaly=false;
+  vm.display=false;
   if(DataService.data.draftType === "auction"){
       vm.auctionTrue = true;
   }

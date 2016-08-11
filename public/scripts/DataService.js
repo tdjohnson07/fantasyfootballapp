@@ -25,25 +25,25 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
     var time=0;
     switch (timestring) {
       case "1:00":
-        time = 60 * 1000;
+        time = 60;
         break;
       case "1:30":
-        time = 90 * 1000;
+        time = 90;
         break;
       case "2:00":
-        time = 120 * 1000;
+        time = 120;
         break;
       case "2:30":
-        time = 150 * 1000;
+        time = 150;
         break;
       case "3:00":
-        time = 180 * 1000;
+        time = 180;
         break;
       case "3:30":
-        time = 210 * 1000;
+        time = 210;
         break;
       case "4:00":
-        time = 240 * 1000;
+        time = 240;
         break;
       default:
         time = 120 * 1000;

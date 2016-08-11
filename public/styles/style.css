@@ -1,3 +1,23 @@
+body{
+  background-image: url("../images/leather_1.png");
+}
 header {
+  text-align: center;
+}
+.loginContent{
+  width: 60%;
+  margin: 10% auto;
+}
+.loginBut{
+  display: inline-block;
+}
+.home{
+  width: 60%;
+  margin: 50px auto;
+  text-align: center;
+}
+.setup{
+  width: 60%;
+  margin: 5% auto;
   text-align: center;
 }

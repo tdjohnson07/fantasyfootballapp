@@ -1,8 +1,25 @@
-<div>
+<div class="home">
   <h2>Welcome to Fantasy Football Draft App</h2>
-  <p>eventually there will be some content here that describes
-    things about this site</p>
-      <button ng-click="home.auction()">Start Auction Draft</button>
-      <button ng-click="home.snake()">Start Snake Draft</button>
-      <button ng-click="home.viewPrevious()">View Previous Drafts</button>
+  <p>Here you can select which activity you would like to do. You can either
+    choose to do an auction draft or a traditional snake draft, or you can
+    view previous drafts that you have saved.</p>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <button class="btn btn-lg btn-info" ng-click="home.auction()">Start Auction Draft</button>
+          <p>In an auction draft you bid on players then place them on the selected team.
+          </p>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-lg btn-info" ng-click="home.snake()">Start Snake Draft</button>
+          <p>In an auction draft you bid on players then place them on the selected team.
+          </p>
+        </div>
+      <div class="col-md-3">
+        <button class="btn btn-lg btn-info" ng-click="home.viewPrevious()">View Previous Drafts</button>
+        <p>In an auction draft you bid on players then place them on the selected team.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>

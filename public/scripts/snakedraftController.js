@@ -1,4 +1,4 @@
-angular.module('fantasyApp').controller('snakedraftController',['$location', 'DataService', function($location, DataService){
+angular.module('fantasyApp').controller('snakedraftController',['$location','$timeout', 'DataService', function($location,$timeout, DataService){
   console.log(DataService.data);
   var vm = this;
   vm.data = DataService.data;
@@ -15,8 +15,34 @@ angular.module('fantasyApp').controller('snakedraftController',['$location', 'Da
   vm.playerSelected = false;
   vm.draftComplete = false;
   vm.draftSaved = false;
+  vm.missedPicks=[];
+  vm.missedTeam;
+  vm.missed=false;
   var currentDisplay=vm.data.players;
   var displayIndex =0;
+  vm.startCountdown = function(){
+  	vm.timerCount = vm.data.pickTime;
+
+  	var countDown = function () {
+  		if (vm.timerCount < 0) {
+  		  //Any desired function upon countdown end.
+        vm.missed=true;
+        vm.missedPicks.push(vm.selectedTeam);
+        selectedTeamIndex++;
+        vm.selectedTeam = vm.data.draftOrder[selectedTeamIndex];
+        vm.onDeck = vm.data.draftOrder[selectedTeamIndex+1];
+        vm.inTheHole = vm.data.draftOrder[selectedTeamIndex+2];
+  		  vm.displayMessage="missed pick";
+        vm.startCountdown();
+  		} else {
+  		  vm.countDownLeft = vm.timerCount;
+  		  vm.timerCount--;
+  		  $timeout(countDown, 1000);
+  		}
+  	};
+  	vm.countDownLeft = vm.timerCount;
+  	countDown();
+  }
   function getDisplayList(playerArray, index){
     for(var i=0; i<10; i++, index++){
       if(index >= playerArray.length-1){
@@ -76,8 +102,28 @@ angular.module('fantasyApp').controller('snakedraftController',['$location', 'Da
     vm.selectedTeam = vm.data.draftOrder[selectedTeamIndex];
     vm.onDeck = vm.data.draftOrder[selectedTeamIndex+1];
     vm.inTheHole = vm.data.draftOrder[selectedTeamIndex+2];
+    vm.timerCount=vm.data.pickTime;
     console.log(location, locationTwo);
 
+  }
+  vm.makeMissed = function(){
+    var index = DataService.findTeamInfo(vm.missedTeam);
+    vm.data.teamInfo[index].teamList.push(vm.selectedPlayer);
+    var location = vm.data.players.indexOf(vm.selectedPlayer);
+    var playerArray=DataService.locateArray(vm.selectedPlayer.position);
+    var locationTwo = playerArray.indexOf(vm.selectedPlayer);
+    var teamlocal = vm.missedPicks.indexOf(vm.missedTeam);
+    vm.missedPicks.splice(teamlocal, 1);
+    vm.data.players.splice(location, 1);
+    DataService.locateArray(vm.selectedPlayer.position).splice(locationTwo, 1);
+    getDisplayList(currentDisplay, displayIndex);
+    vm.playerSelected=false;
+    vm.displayMessage = vm.selectedPlayer.displayname + " added to " + vm.data.teamInfo[index].teamName;
+    vm.selectedPlayer = {};
+    if(vm.missedPicks.length===0){
+      vm.missed=false;
+    }
+    vm.timerCount=vm.data.pickTime;
   }
   vm.completeDraft = function (){
     vm.draftComplete=true;

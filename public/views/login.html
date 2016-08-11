@@ -1,13 +1,25 @@
-<div>
-  <label for="username">Username:</label>
-  <input type="text" ng-model="login.username" id="username" />
+<div class="loginContent container">
+  <div class="row">
+    <div class="col-md-6">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" ng-model="login.username" id="username" />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" ng-model="login.password" id="password" />
+      </div>
+      <div class="loginBut">
+        <button class="loginBut" ng-click="login.login()">Login</button>
+        <a class="loginBut" href="/register">Register</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <p> Welcome to your new home for fanatasy football drafts!
+          To get started click on the register link and create a username
+          and password. If you've already registerd just login with your username
+          and password.
+        </p>
+    </div>
+  </div>
 </div>
-<div>
-  <label for="password">Password:</label>
-  <input type="password" ng-model="login.password" id="password" />
-</div>
-
-<button ng-click="login.login()">Login</button>
-
-
-<a href="/register">Register</a>
