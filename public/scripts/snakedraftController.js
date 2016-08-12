@@ -2,7 +2,11 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
   console.log(DataService.data);
   var vm = this;
   vm.data = DataService.data;
-  vm.positions=['QB','RB', 'WR', 'TE', 'K', 'DEF', 'ALL'];
+  if(vm.data.idp){
+    vm.positions=['QB','RB', 'WR', 'TE', 'K', 'DEF', 'ALL', 'DT', 'DE', 'LB', 'S', 'CB'];
+  }else{
+    vm.positions=['QB','RB', 'WR', 'TE', 'K', 'DEF', 'ALL'];
+  }
   vm.displayList=[];
   vm.selectedPlayer={};
   var selectedTeamIndex = 0;
@@ -15,10 +19,16 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
   vm.playerSelected = false;
   vm.draftComplete = false;
   vm.draftSaved = false;
+  vm.draftnotSaved=false;
+  vm.draftnotSaved=false;
   vm.missedPicks=[];
   vm.missedTeam;
   vm.missed=false;
   vm.showClock=false;
+  vm.undune=true;
+  var lastPick={};
+  var lastPickTwo={};
+  var lastTeamIndex;
   var currentDisplay=vm.data.ranked;
   var displayIndex =0;
   vm.startCountdown = function(){
@@ -82,10 +92,11 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     console.log(player);
     vm.playerSelected = true;
     vm.selectedP=player;
-    vm.selectedPlayer=DataService.locatePlayer(player.playerId);
+    vm.selectedPlayer=DataService.locatePlayer(player);
   }
   vm.draft = function(){
     var index=DataService.findTeamInfo(vm.selectedTeam);
+    lastTeamIndex=index;
     if(!vm.playerSelected){
       vm.displayMessage = "No player Selected";
       return;
@@ -105,17 +116,33 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     getDisplayList(currentDisplay, displayIndex);
     vm.playerSelected=false;
     vm.displayMessage = vm.selectedPlayer.displayname + " added to " + vm.data.teamInfo[index].teamName;
+    lastPick=vm.selectedPlayer;
+    lastPickTwo=vm.selectedP;
     vm.selectedPlayer = {};
     selectedTeamIndex++;
     if(selectedTeamIndex >= vm.data.draftOrder.length){
       vm.displayMessage= "Draft Complete";
+      vm.stopClock();
     }
     vm.selectedTeam = vm.data.draftOrder[selectedTeamIndex];
     vm.onDeck = vm.data.draftOrder[selectedTeamIndex+1];
     vm.inTheHole = vm.data.draftOrder[selectedTeamIndex+2];
     vm.timerCount=vm.data.pickTime;
+    vm.undune=false;
     console.log(location, locationTwo);
-
+  }
+  vm.undo = function(){
+  DataService.locateArray(lastPickTwo.position).push(lastPickTwo);
+  vm.data.ranked.push(lastPickTwo);
+  vm.data.players.push(lastPick);
+  vm.data.teamInfo[lastTeamIndex].teamList.pop();
+  selectedTeamIndex--;
+  vm.selectedTeam = vm.data.draftOrder[selectedTeamIndex];
+  vm.onDeck = vm.data.draftOrder[selectedTeamIndex+1];
+  vm.inTheHole = vm.data.draftOrder[selectedTeamIndex+2];
+  vm.timerCount=vm.data.pickTime;
+  vm.undune=true;
+  vm.displayMessage="Player Removed";
   }
   vm.makeMissed = function(){
     var index = DataService.findTeamInfo(vm.missedTeam);
@@ -143,10 +170,12 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
         return;
       }
     }
+    vm.draftnotSaved=true;
     vm.draftComplete=true;
     DataService.sendDraft();
   }
   vm.saveDraft = function(){
+    vm.draftnotSaved=false;
     vm.draftSaved = true;
     DataService.saveDraft();
   }

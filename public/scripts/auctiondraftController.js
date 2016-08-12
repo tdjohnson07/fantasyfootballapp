@@ -2,7 +2,11 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
   console.log(DataService.data);
   var vm = this;
   vm.data = DataService.data;
-  vm.positions=['QB','RB', 'WR', 'TE', 'K', 'DEF', 'ALL'];
+  if(vm.data.idp){
+    vm.positions=['QB','RB', 'WR', 'TE', 'K', 'DEF', 'ALL', 'DT', 'DE', 'LB', 'S', 'CB'];
+  }else{
+    vm.positions=['QB','RB', 'WR', 'TE', 'K', 'DEF', 'ALL'];
+  }
   vm.displayList=[];
   vm.selectedPlayer={};
   vm.displayMessage= "Have Fun Drafting";
@@ -11,6 +15,12 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
   vm.playerSelected = false;
   vm.draftComplete = false;
   vm.draftSaved = false;
+  vm.draftnotSaved=false;
+  vm.undune=true;
+  var lastPick={};
+  var lastPickTwo={};
+  var lastTeamIndex;
+  var lastAmount;
   var currentDisplay=vm.data.ranked;
   var displayIndex =0;
   function getDisplayList(playerArray, index){
@@ -44,7 +54,7 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
     console.log(player);
     vm.playerSelected = true;
     vm.selectedP=player;
-    vm.selectedPlayer=DataService.locatePlayer(player.playerId);
+    vm.selectedPlayer=DataService.locatePlayer(player);
   }
   vm.draft = function(){
     if(!vm.selectedTeam){
@@ -52,6 +62,7 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
       return;
     }
     var index=DataService.findTeamInfo(vm.selectedTeam);
+    lastTeamIndex=index;
     if(!vm.playerSelected){
       vm.displayMessage = "No player Selected";
       return;
@@ -64,10 +75,14 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
       vm.displayMessage = "Roster Full"
       return;
     }
-    if(!vm.amount){
-      vm.displayMessage = "No Amount Entered";
+    if(vm.amount<0){
+      vm.displayMessage = "Not a valid amount";
       return;
     }
+    if(!vm.amount){
+      vm.amount=0;
+    }
+    lastAmount=vm.amount;
     vm.data.teamInfo[index].teamList.push(vm.selectedPlayer);
     vm.data.teamInfo[index].cash-=vm.amount;
     var location = vm.data.players.indexOf(vm.selectedPlayer);
@@ -80,9 +95,21 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
     getDisplayList(currentDisplay, displayIndex);
     vm.playerSelected=false;
     vm.displayMessage = vm.selectedPlayer.displayname + " added to " + vm.data.teamInfo[index].teamName;
+    lastPick=vm.selectedPlayer;
+    lastPickTwo=vm.selectedP;
     vm.selectedPlayer = {};
     vm.amount= null;
+    vm.undune=false;
     console.log(location, locationTwo);
+  }
+  vm.undo = function(){
+  DataService.locateArray(lastPickTwo.position).push(lastPickTwo);
+  vm.data.ranked.push(lastPickTwo);
+  vm.data.players.push(lastPick);
+  vm.data.teamInfo[lastTeamIndex].teamList.pop();
+  vm.data.teamInfo[lastTeamIndex].cash+=lastAmount;
+  vm.displayMessage="Player removed";
+  vm.undune=true;
   }
   vm.completeDraft = function (){
     for(var i=0; i<vm.data.setTeams.length; i++){
@@ -92,9 +119,11 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
       }
     }
     vm.draftComplete=true;
+    vm.draftnotSaved=true;
     DataService.sendDraft();
   }
   vm.saveDraft = function(){
+    vm.draftnotSaved=false;
     vm.draftSaved = true;
     DataService.saveDraft();
   }

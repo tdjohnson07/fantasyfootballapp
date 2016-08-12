@@ -55,6 +55,7 @@ text-align: center;
 overflow: scroll;
 border: 1px solid black;
 font-weight: bold;
+height: 70px;
 /*text-shadow: 2px 2px white;*/
 }
 .QB{
@@ -74,6 +75,21 @@ font-weight: bold;
 }
 .K{
   background-color: pink;
+}
+.DT{
+  background-color: burlywood;
+}
+.DE{
+  background-color: #800020;
+}
+.LB{
+  background-color: #ffff66;
+}
+.S{
+  background-color: #999966;
+}
+.CB{
+  background-color: #336600;
 }
 .playerlist{
   margin-top: 10px;

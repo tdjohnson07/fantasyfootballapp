@@ -1,13 +1,14 @@
 <a href="/home">Home page</a>
 <button class="saveBut btn btn-warning" ng-hide="snake.draftComplete" ng-click="snake.completeDraft()">Draft complete</button>
-<button class="saveBut btn btn-warning" ng-show="snake.draftComplete" ng-click="snake.saveDraft()">Save Draft</button>
-<h3 ng-show="snake.draftSaved">Draft Saved</h3>
+<button class="saveBut btn btn-warning" ng-show="snake.draftnotSaved" ng-click="snake.saveDraft()">Save Draft</button>
+<h3 class="saveBut text-success" ng-show="snake.draftSaved">Draft Saved</h3>
 <h2 class="draftname">{{snake.data.draftName}}</h2>
 <ul class="clock">
 <li><button ng-hide="snake.showClock" ng-click="snake.startCountdown()">Start Clock</button>
   <button ng-show="snake.showClock" ng-click="snake.stopClock()">Stop Clock</button>
 <h3 ng-show="snake.showClock">{{snake.minutes}}:{{snake.seconds}}</h3></li>
 </ul>
+<button class="btn btn-danger" ng-hide="snake.undune" ng-click="snake.undo()">Undo last pick</button>
 <div class="container">
   <div class="row">
     <div class="teams col-md-1 col-lg-1" ng-repeat="team in snake.data.setTeams track by $index">
@@ -43,7 +44,7 @@
       <input type="text" ng-model="searchInput" id="search" />
       <ul>
         <li ng-show="searchInput" ng-repeat="player in snake.data.players | filter:{lname: searchInput} | limitTo: 10"  ng-click="snake.selectPlayer(player)">
-          {{player.displayname}}
+          {{player.displayname}} {{player.position}} {{player.team}}
         </li>
       </ul>
     </div>
@@ -55,7 +56,7 @@
       </div>
         <ul>
         <li ng-repeat="player in snake.displayList track by $index" ng-click="snake.selectPlayer(player)">
-          {{player.displayName}} {{player.position}} {{player.team}}
+          {{player.overallRank}}. {{player.displayName}} {{player.displayname}} {{player.position}} {{player.team}}
         </li>
       </ul>
       <button ng-show="snake.endList" ng-click="snake.prevDisplay()">Prev</button>

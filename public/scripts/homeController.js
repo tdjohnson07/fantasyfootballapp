@@ -3,6 +3,7 @@ angular.module('fantasyApp').controller('homeController', ['$http','$location', 
   vm.data = DataService.data;
   DataService.data.teamInfo=[];
   DataService.data.setTeams=[];
+  DataService.emptyArrays();
   vm.auction = function(){
     DataService.data.draftType="auction";
     DataService.data.loggedIn = true;

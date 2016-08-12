@@ -3,8 +3,8 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
   data.draftType = "";
   data.draftName = "";
   data.setTeams =[];
-  data.idp=false;
   data.selectedRounds= 0;
+  data.idp=false;
   data.randomize=false;
   data.qbs=[];
   data.rbs=[];
@@ -12,6 +12,11 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
   data.tes=[];
   data.kicks=[];
   data.defs=[];
+  data.des=[];
+  data.dts=[];
+  data.lbs=[];
+  data.safetys=[];
+  data.cbs=[];
   data.teamInfo=[];
   data.draftOrder=[];
   data.prevDrafts =[];
@@ -20,6 +25,19 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
   data.teams=[];
   var lastsaved;
   var mostRecentDraftId;
+  function emptyArrays(){
+    data.qbs=[];
+    data.rbs=[];
+    data.wrs=[];
+    data.tes=[];
+    data.kicks=[];
+    data.defs=[];
+    data.des=[];
+    data.dts=[];
+    data.lbs=[];
+    data.safetys=[];
+    data.cbs=[];
+  }
   function convertTime(timestring){
     var time=0;
     switch (timestring) {
@@ -74,6 +92,28 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
     }
   }
 }
+function sortDef(players){
+  for(var i=0; i<players.length; i++){
+    var position=players[i].position;
+    switch (position) {
+      case "DE":
+        data.des.push(players[i])
+        break;
+      case "DT":
+        data.dts.push(players[i])
+        break;
+      case "LB":
+        data.lbs.push(players[i])
+        break;
+      case "S":
+        data.safetys.push(players[i])
+        break;
+      case "CB":
+        data.cbs.push(players[i])
+        break;
+  }
+}
+}
 function setTeamInfo(){
   for (var i=0; i<data.setTeams.length; i++){
     var team ={};
@@ -106,16 +146,33 @@ function locateArray(position){
       break;
     case "ALL":
       playerArray=data.ranked;
+      break;
+    case "DE":
+      playerArray=data.des;
+      break;
+    case "DT":
+      playerArray=data.dts;
+      break;
+    case "LB":
+      playerArray=data.lbs;
+      break;
+    case "S":
+      playerArray=data.safetys;
+      break;
+    case "CB":
+      playerArray=data.cbs;
+      break;
   }
   return playerArray;
 }
-function locatePlayer(id){
+function locatePlayer(player){
+  var id=player.playerId;
   for(var i=0; i<data.players.length; i++){
     if(parseInt(id) == parseInt(data.players[i].playerid)){
       return data.players[i];
     }
   }
-  console.log("no match found");
+  return player;
 }
 function findTeamInfo(team){
   var index = 0;
@@ -254,7 +311,7 @@ function randomize(teamArray){
     }
     console.log(data.teams);
   }
-  getPlayers();
+  // getPlayers();
   getRanked();
   return {
     data: data,
@@ -271,6 +328,9 @@ function randomize(teamArray){
     getDrafts: getDrafts,
     getCurrentDraft: getCurrentDraft,
     getRankedPlayers: getRankedPlayers,
-    locatePlayer: locatePlayer
+    locatePlayer: locatePlayer,
+    sortDef: sortDef,
+    getPlayers: getPlayers,
+    emptyArrays: emptyArrays
   }
 }]);
