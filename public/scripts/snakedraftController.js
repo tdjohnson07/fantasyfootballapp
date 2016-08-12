@@ -83,6 +83,7 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     getDisplayList(currentDisplay, displayIndex);
   }
   vm.narrow = function(position){
+    vm.startList=true;
     displayIndex=0;
     var playerArray=DataService.locateArray(position);
     currentDisplay=playerArray;

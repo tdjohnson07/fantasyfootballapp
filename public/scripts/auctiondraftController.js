@@ -49,6 +49,7 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
   }
   //function used to change display list by position takes key of position
   vm.narrow = function(position){
+    vm.startList=true;
     displayIndex=0;
     var playerArray=DataService.locateArray(position);
     currentDisplay=playerArray;
