@@ -19,6 +19,7 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
     console.log(vm.setTeams);
   }
   vm.start = function(){
+    DataService.sortPlayers(DataService.data.ranked);
     DataService.data.setTeams= vm.setTeams;
     DataService.data.idp=vm.idp;
     DataService.data.selectedRounds=vm.selectedRounds;
@@ -65,5 +66,5 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
       $location.path('/snake');
     }
   }
-  DataService.sortPlayers();
+  DataService.getRankedPlayers();
 }]);

@@ -18,12 +18,14 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
   vm.missedPicks=[];
   vm.missedTeam;
   vm.missed=false;
-  var currentDisplay=vm.data.players;
+  vm.showClock=false;
+  var currentDisplay=vm.data.ranked;
   var displayIndex =0;
   vm.startCountdown = function(){
+    vm.showClock=true;
   	vm.timerCount = vm.data.pickTime;
-  	var countDown = function () {
-  		if (vm.timerCount < 0) {
+  	 var countDown = function () {
+  		if (vm.timerCount < 0 && vm.showClock===true) {
   		  //Any desired function upon countdown end.
         vm.missed=true;
         vm.missedPicks.push(vm.selectedTeam);
@@ -45,6 +47,9 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     vm.minutes=Math.floor(vm.timerCount/60);
     vm.seconds=vm.timerCount-(vm.minutes*60);
   	countDown();
+  }
+  vm.stopClock = function(){
+    vm.showClock=false;
   }
   function getDisplayList(playerArray, index){
     for(var i=0; i<10; i++, index++){
@@ -76,7 +81,8 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
   vm.selectPlayer = function(player){
     console.log(player);
     vm.playerSelected = true;
-    vm.selectedPlayer=player;
+    vm.selectedP=player;
+    vm.selectedPlayer=DataService.locatePlayer(player.playerId);
   }
   vm.draft = function(){
     var index=DataService.findTeamInfo(vm.selectedTeam);
@@ -90,8 +96,10 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     }
     vm.data.teamInfo[index].teamList.push(vm.selectedPlayer);
     var location = vm.data.players.indexOf(vm.selectedPlayer);
-    var playerArray=DataService.locateArray(vm.selectedPlayer.position);
-    var locationTwo = playerArray.indexOf(vm.selectedPlayer);
+    var playerArray=DataService.locateArray(vm.selectedP.position);
+    var locationTwo = playerArray.indexOf(vm.selectedP);
+    var locationThree = vm.data.ranked.indexOf(vm.selectedP);
+    vm.data.ranked.splice(locationThree, 1);
     vm.data.players.splice(location, 1);
     DataService.locateArray(vm.selectedPlayer.position).splice(locationTwo, 1);
     getDisplayList(currentDisplay, displayIndex);
@@ -143,5 +151,5 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     DataService.saveDraft();
   }
   console.log(vm.data.teamInfo);
-  getDisplayList(vm.data.players, displayIndex);
+  getDisplayList(vm.data.ranked, displayIndex);
 }]);

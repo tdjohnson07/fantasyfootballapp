@@ -15,6 +15,7 @@ angular.module('fantasyApp').controller('loginController',['$http', '$location',
   }
   function handleFailure(res){
     console.log('failure', res);
+    vm.showFail='Invalid Username and Password';
     $location.path('/');
   }
 }]);

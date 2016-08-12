@@ -1,14 +1,24 @@
-<div>
-  <label for="username">Username:</label>
-  <input type="text" ng-model="register.username" id="username" />
+<div class="loginContent container">
+  <div class="row">
+    <div class="col-md-5">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" ng-model="register.username" id="username" />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" ng-model="register.password" id="password" />
+      </div>
+      <div>
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" ng-model="register.confirmPassword" id="confirmPassword" />
+        <h3 class="text-danger" ng-show="register.showMessage">Passwords do not match</h3>
+      </div>
+      <button ng-click="register.register()">register</button>
+      <a href="/">return to login</a>
+    </div>
+    <div class="col-md-4">
+      <p> Here you can create an account by entering a username and password</p>
+    </div>
+  </div>
 </div>
-<div>
-  <label for="password">Password:</label>
-  <input type="password" ng-model="register.password" id="password" />
-</div>
-<div>
-  <label for="confirmPassword">Confirm Password:</label>
-  <input type="password" ng-model="register.confirmPassword" id="confirmPassword" />
-</div>
-<button ng-click="register.register()">register</button>
-<a href="/">return to login</a>

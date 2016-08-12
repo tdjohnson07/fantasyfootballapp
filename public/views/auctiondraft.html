@@ -1,4 +1,7 @@
 <a href="/home">Home page</a>
+<button class="saveBut btn btn-warning" ng-hide="auction.draftComplete" ng-click="auction.completeDraft()">Draft complete</button>
+<button class="saveBut btn btn-warning" ng-show="auction.draftComplete" ng-click="auction.saveDraft()">Save Draft</button>
+<h3 ng-show="auction.draftSaved">Draft Saved</h3>
 <h2 class="draftname">{{auction.data.draftName}}</h2>
 <div class="container">
   <div class="row">
@@ -27,9 +30,6 @@
         </select>
         <button ng-click="auction.draft()">Draft Player</button>
         <h4>{{auction.displayMessage}}</h4>
-        <button ng-hide="auction.draftComplete" ng-click="auction.completeDraft()">Draft complete</button>
-        <button ng-show="auction.draftComplete" ng-click="auction.saveDraft()">Save Draft</button>
-        <h3 ng-show="auction.draftSaved">Draft Saved</h3>
     </div>
     <div class="search col-md-4">
       <label for="Search">Search by Name:</label>
@@ -48,7 +48,7 @@
       </div>
         <ul>
         <li ng-repeat="player in auction.displayList track by $index" ng-click="auction.selectPlayer(player)">
-          {{player.displayname}} {{player.position}} {{player.team}}
+          {{player.displayName}} {{player.position}} {{player.team}}
         </li>
       </ul>
       <button ng-show="auction.endList" ng-click="auction.prevDisplay()">Prev</button>

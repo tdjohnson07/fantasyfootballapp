@@ -11,7 +11,7 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
   vm.playerSelected = false;
   vm.draftComplete = false;
   vm.draftSaved = false;
-  var currentDisplay=vm.data.players;
+  var currentDisplay=vm.data.ranked;
   var displayIndex =0;
   function getDisplayList(playerArray, index){
     for(var i=0; i<10; i++, index++){
@@ -43,7 +43,8 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
   vm.selectPlayer = function(player){
     console.log(player);
     vm.playerSelected = true;
-    vm.selectedPlayer=player;
+    vm.selectedP=player;
+    vm.selectedPlayer=DataService.locatePlayer(player.playerId);
   }
   vm.draft = function(){
     if(!vm.selectedTeam){
@@ -70,10 +71,12 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
     vm.data.teamInfo[index].teamList.push(vm.selectedPlayer);
     vm.data.teamInfo[index].cash-=vm.amount;
     var location = vm.data.players.indexOf(vm.selectedPlayer);
-    var playerArray=DataService.locateArray(vm.selectedPlayer.position);
-    var locationTwo = playerArray.indexOf(vm.selectedPlayer);
+    var playerArray=DataService.locateArray(vm.selectedP.position);
+    var locationTwo = playerArray.indexOf(vm.selectedP);
+    var locationThree = vm.data.ranked.indexOf(vm.selectedP);
+    vm.data.ranked.splice(locationThree, 1);
     vm.data.players.splice(location, 1);
-    DataService.locateArray(vm.selectedPlayer.position).splice(locationTwo, 1);
+    DataService.locateArray(vm.selectedP.position).splice(locationTwo, 1);
     getDisplayList(currentDisplay, displayIndex);
     vm.playerSelected=false;
     vm.displayMessage = vm.selectedPlayer.displayname + " added to " + vm.data.teamInfo[index].teamName;
@@ -96,5 +99,5 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
     DataService.saveDraft();
   }
   console.log(vm.data.teamInfo);
-  getDisplayList(vm.data.players, displayIndex);
+  getDisplayList(vm.data.ranked, displayIndex);
 }]);

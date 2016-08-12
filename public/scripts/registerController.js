@@ -3,8 +3,12 @@ angular.module('fantasyApp').controller('registerController',['$http','$location
   vm.username='';
   vm.password='';
   vm.confirmPassword='';
+  vm.showMessage=false;
   vm.register = function(){
-    console.log(vm.username, vm.password);
+    if(vm.password != vm.confirmPassword || vm.username==='' || vm.password ===''){
+      vm.showMessage = true;
+      return;
+    }
     var sendData = {};
     sendData.username= vm.username;
     sendData.password = vm.password;

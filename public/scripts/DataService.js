@@ -18,7 +18,6 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
   data.selectedDraft={};
   data.draftToView=[];
   data.teams=[];
-  data.loggedIn = false;
   var lastsaved;
   var mostRecentDraftId;
   function convertTime(timestring){
@@ -50,27 +49,27 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
       }
       return time;
   }
-  function sortPlayers(){
-    for(var i=0; i<data.players.length; i++){
-      var position=data.players[i].position;
+  function sortPlayers(players){
+    for(var i=0; i<players.length; i++){
+      var position=players[i].position;
       switch (position) {
         case "QB":
-          data.qbs.push(data.players[i])
+          data.qbs.push(players[i])
           break;
         case "RB":
-          data.rbs.push(data.players[i])
+          data.rbs.push(players[i])
           break;
         case "WR":
-          data.wrs.push(data.players[i])
+          data.wrs.push(players[i])
           break;
         case "TE":
-          data.tes.push(data.players[i])
+          data.tes.push(players[i])
           break;
         case "K":
-          data.kicks.push(data.players[i])
+          data.kicks.push(players[i])
           break;
         case "DEF":
-          data.defs.push(data.players[i])
+          data.defs.push(players[i])
           break;
     }
   }
@@ -106,9 +105,17 @@ function locateArray(position){
       playerArray=data.defs;
       break;
     case "ALL":
-      playerArray=data.players;
+      playerArray=data.ranked;
   }
   return playerArray;
+}
+function locatePlayer(id){
+  for(var i=0; i<data.players.length; i++){
+    if(parseInt(id) == parseInt(data.players[i].playerid)){
+      return data.players[i];
+    }
+  }
+  console.log("no match found");
 }
 function findTeamInfo(team){
   var index = 0;
@@ -150,6 +157,19 @@ function randomize(teamArray){
   }
   function handleFailure(res){
     console.log('/players fail', res);
+  }
+  function getRanked(){
+    $http.get('/ranked').then(handleRankedSuccess, handleFailure);
+  }
+  function handleRankedSuccess(res){
+    console.log(res);
+  }
+  function getRankedPlayers(){
+    $http.get('/ranked/players').then(handleReturnRanked, handleFailure);
+  }
+  function handleReturnRanked(res){
+    data.ranked=res.data;
+    console.log(res);
   }
   function sendDraft(){
     var sendData = {};
@@ -235,6 +255,7 @@ function randomize(teamArray){
     console.log(data.teams);
   }
   getPlayers();
+  getRanked();
   return {
     data: data,
     convertTime: convertTime,
@@ -248,6 +269,8 @@ function randomize(teamArray){
     sendDraft: sendDraft,
     saveDraft: saveDraft,
     getDrafts: getDrafts,
-    getCurrentDraft: getCurrentDraft
+    getCurrentDraft: getCurrentDraft,
+    getRankedPlayers: getRankedPlayers,
+    locatePlayer: locatePlayer
   }
 }]);

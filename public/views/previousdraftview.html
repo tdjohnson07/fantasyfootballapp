@@ -2,7 +2,7 @@
 <h2 class="draftname">{{prevView.data.selectedDraft.draftname}}</h2>
 <div class = "container">
   <div class = "row">
-    <div class="col-md-1" ng-repeat="team in prevView.data.teams track by $index">
+    <div class=" teams col-md-1" ng-repeat="team in prevView.data.teams track by $index">
       <h3>{{team[0].teamname}}</h3>
       <ul>
         <li class="teamlist {{player.position}}" ng-repeat="player in prevView.data.teams[$index]">

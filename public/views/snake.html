@@ -1,8 +1,12 @@
 <a href="/home">Home page</a>
+<button class="saveBut btn btn-warning" ng-hide="snake.draftComplete" ng-click="snake.completeDraft()">Draft complete</button>
+<button class="saveBut btn btn-warning" ng-show="snake.draftComplete" ng-click="snake.saveDraft()">Save Draft</button>
+<h3 ng-show="snake.draftSaved">Draft Saved</h3>
 <h2 class="draftname">{{snake.data.draftName}}</h2>
 <ul class="clock">
-<li><button ng-click="snake.startCountdown()">Start Clock</button></li>
-<li><h3>{{snake.minutes}}:{{snake.seconds}}</h3></li>
+<li><button ng-hide="snake.showClock" ng-click="snake.startCountdown()">Start Clock</button>
+  <button ng-show="snake.showClock" ng-click="snake.stopClock()">Stop Clock</button>
+<h3 ng-show="snake.showClock">{{snake.minutes}}:{{snake.seconds}}</h3></li>
 </ul>
 <div class="container">
   <div class="row">
@@ -33,9 +37,6 @@
         </select>
         <button ng-show="snake.missed" ng-click="snake.makeMissed()">Make missed pick</button>
         <br>
-        <button ng-hide="snake.draftComplete" ng-click="snake.completeDraft()">Draft complete</button>
-        <button ng-show="snake.draftComplete" ng-click="snake.saveDraft()">Save Draft</button>
-        <h3 ng-show="snake.draftSaved">Draft Saved</h3>
     </div>
     <div class="search col-md-4">
       <label for="Search">Search by Name:</label>
@@ -54,7 +55,7 @@
       </div>
         <ul>
         <li ng-repeat="player in snake.displayList track by $index" ng-click="snake.selectPlayer(player)">
-          {{player.displayname}} {{player.position}} {{player.team}}
+          {{player.displayName}} {{player.position}} {{player.team}}
         </li>
       </ul>
       <button ng-show="snake.endList" ng-click="snake.prevDisplay()">Prev</button>
