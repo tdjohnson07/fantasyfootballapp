@@ -1,3 +1,4 @@
+//functions used to create and verify users and encrypt passwords stored in DB
 var pg = require('pg');
 var bcrypt= require('bcrypt');
 
@@ -8,6 +9,7 @@ var config = {
   idleTimeoutMillis: 30000
 };
 var pool = new pg.Pool(config);
+//function used to create user in db
 function CreateUser(username, password, callback){
   bcrypt.hash(password, 10, function(err, hash){
     pool.connect(function(err, client, done){
@@ -29,6 +31,7 @@ function CreateUser(username, password, callback){
     })
   })
 }
+//function to find user by there username
 function findByUsername(username, callback){
   pool.connect(function(err, client, done){
     if (err){
@@ -48,6 +51,7 @@ function findByUsername(username, callback){
     });
   });
 }
+//function to find user by their id
 function findById(id, callback){
   pool.connect(function(err, client, done){
     if(err){
@@ -66,6 +70,7 @@ function findById(id, callback){
     })
   })
 }
+//function to verify user and password match
 function findAndComparePassword(username, canidatePassword, callback){
   findByUsername(username, function(err, user){
     if (err){
@@ -80,7 +85,6 @@ function findAndComparePassword(username, canidatePassword, callback){
         callback(err);
       }
       else{
-        console.log('isMatch', isMatch);
         callback(null, isMatch, user);
       }
     })

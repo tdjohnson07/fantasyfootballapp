@@ -1,5 +1,6 @@
 angular.module('fantasyApp').factory('DataService',['$http', function($http){
   var data = {};
+  //list of varibles used to set up draft
   data.draftType = "";
   data.draftName = "";
   data.setTeams =[];
@@ -25,6 +26,7 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
   data.teams=[];
   var lastsaved;
   var mostRecentDraftId;
+  //function called on home page to reset draft information before new draft occurs
   function emptyArrays(){
     data.qbs=[];
     data.rbs=[];
@@ -39,7 +41,10 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
     data.cbs=[];
     data.draftOrder=[];
     data.selectedRounds= 0;
+    data.idp=false;
+    data.randomize=false;
   }
+  //function to convert selected time to a number in seconds
   function convertTime(timestring){
     var time=0;
     switch (timestring) {
@@ -69,6 +74,7 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
       }
       return time;
   }
+  //function used to sort an array of players into arrays based on position
   function sortPlayers(players){
     for(var i=0; i<players.length; i++){
       var position=players[i].position;
@@ -94,6 +100,7 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
     }
   }
 }
+//function used to sort an array of players into postion arrays for defensive players
 function sortDef(players){
   for(var i=0; i<players.length; i++){
     var position=players[i].position;
@@ -116,6 +123,7 @@ function sortDef(players){
   }
 }
 }
+//function used to set all team information for a draft
 function setTeamInfo(){
   for (var i=0; i<data.setTeams.length; i++){
     var team ={};
@@ -125,6 +133,7 @@ function setTeamInfo(){
     data.teamInfo.push(team);
   }
 }
+//function used to locate a players postion array, takes in a postion
 function locateArray(position){
   var playerArray=[];
   switch (position) {
@@ -167,6 +176,7 @@ function locateArray(position){
   }
   return playerArray;
 }
+//function used to locate player index in the master list of players, takes a player and uses their id
 function locatePlayer(player){
   var id=player.playerId;
   for(var i=0; i<data.players.length; i++){
@@ -176,6 +186,7 @@ function locatePlayer(player){
   }
   return player;
 }
+//function used to find the index of a team takes in a string of team name
 function findTeamInfo(team){
   var index = 0;
   for (var i=0; i<data.setTeams.length; i++){
@@ -185,11 +196,13 @@ function findTeamInfo(team){
   }
   return index;
 }
+//function used by setDraftOrder to add teams to draftorder array takes in a array
 function addToDraftOrder(teamArray){
   for(var i=0; i<teamArray.length; i++){
     data.draftOrder.push(teamArray[i]);
   }
 }
+//function used to set draft order, takes an array and reverses it for alternating rounds
 function setDraftOrder(teamArray, rounds){
   addToDraftOrder(teamArray);
   for(var i=0; i<rounds-1; i++){
@@ -197,6 +210,7 @@ function setDraftOrder(teamArray, rounds){
     addToDraftOrder(teamArray);
   }
 }
+//function used to randomize draft order takes an array and returns newly shuffled array
 function randomize(teamArray){
   for(var i=teamArray.length-1; i>0; i--){
     var ranIndex=Math.floor(Math.random()*(teamArray.length))
@@ -207,29 +221,35 @@ function randomize(teamArray){
   console.log(teamArray);
   return teamArray;
 }
+//function to get full players list from DB
   function getPlayers(){
     $http.get('/players').then(handleSuccess, handleFailure);
   }
+  //function to save full players list to data.players
   function handleSuccess(res){
     data.players = res.data
-    console.log(data.players);
   }
+  //generic failure request function
   function handleFailure(res){
     console.log('/players fail', res);
   }
+  //function to get ranked players pulls from fantasyfootballnerd.com api and holds list on server
   function getRanked(){
     $http.get('/ranked').then(handleRankedSuccess, handleFailure);
   }
+  //function to show success of getting ranked players to db
   function handleRankedSuccess(res){
     console.log(res);
   }
+  //function to pull rank players from server to client
   function getRankedPlayers(){
     $http.get('/ranked/players').then(handleReturnRanked, handleFailure);
   }
+  //success function to store ranked players to data.ranked
   function handleReturnRanked(res){
     data.ranked=res.data;
-    console.log(res);
   }
+  //function to save instance of draft in DB
   function sendDraft(){
     var sendData = {};
     var date = new Date();
@@ -240,11 +260,13 @@ function randomize(teamArray){
     sendData.numofrounds = data.selectedRounds;
     $http.post('/save', sendData).then(getDraftId, failure);
   }
+  //function to get specific draft id of last saved instance
   function getDraftId(){
     var sendData = {};
     sendData.date = lastsaved;
     $http.post('/save/getdraft', sendData).then(sendTeams, failure);
   }
+  //function used to save teams in a specific draft
   function sendTeams(res){
     var draftid = res.data.rows[0].id;
     mostRecentDraftId = draftid;
@@ -255,20 +277,21 @@ function randomize(teamArray){
       $http.post('/save/sendteams', sendData).then(success, failure);
     }
   }
+  //function used to get draftid to save draft
   function saveDraft(){
     var sendData = {};
     sendData.draftid = mostRecentDraftId;
     $http.post('/save/getteamids', sendData).then(addPlayers, failure);
   }
+  //function used to save players using draft id from response
   function addPlayers(res){
-    console.log(res);
-    console.log(data.teamInfo);
     for(var i=0; i<res.data.rows.length; i++){
       var team = res.data.rows[i].teamname;
       var id = res.data.rows[i].id;
       findTeamAndAddPlayers(team, id);
     }
   }
+  //function that actualy send players to DB
   function findTeamAndAddPlayers(team, id){
     console.log(data.teamInfo);
     for(var i=0; i<data.teamInfo.length; i++){
@@ -284,9 +307,11 @@ function randomize(teamArray){
       }
     }
   }
+  //generic handle success function
   function success(res){
     console.log('success');
   }
+  //generic handle failure function
   function failure(res){
     console.log('failure');
   }
@@ -295,8 +320,6 @@ function randomize(teamArray){
   }
   function getDraftsSuccess(res){
     data.prevDrafts=res.data.rows;
-    console.log(data.prevDrafts);
-    console.log('success');
   }
   function getCurrentDraft(draft){
     data.draftToView=[];

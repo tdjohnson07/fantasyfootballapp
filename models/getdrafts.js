@@ -1,3 +1,4 @@
+//functions used by drafts route to pull saved drafts from DB
 var pg = require('pg');
 var config = {
   database: 'fantasyDB',
@@ -6,6 +7,7 @@ var config = {
   idleTimeoutMillis: 30000
 };
 var pool = new pg.Pool(config);
+//function to find drafts by user id
 function findDrafts(id, callback){
   pool.connect(function(err, client, done){
     if(err){
@@ -24,6 +26,7 @@ function findDrafts(id, callback){
     })
   })
 }
+//function used to find specific draft by draft id
 function getCurrent(id, callback){
   pool.connect(function(err, client, done){
     if(err){

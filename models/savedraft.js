@@ -1,3 +1,4 @@
+//functions used by save route to save drafts to the DB
 var pg = require('pg');
 var config = {
   database: 'fantasyDB',
@@ -6,6 +7,7 @@ var config = {
   idleTimeoutMillis: 30000
 };
 var pool = new pg.Pool(config);
+//function used to create draft instance in DB
 function createDraft(userid, date, draftname, numofteams, numofrounds, callback){
   pool.connect(function(err, client, done){
     if(err){
@@ -25,6 +27,7 @@ function createDraft(userid, date, draftname, numofteams, numofrounds, callback)
     })
   })
 }
+//function used to find draft id by userid and date
 function getId(userid, date, callback){
   pool.connect(function(err, client, done){
     if(err){
@@ -44,6 +47,7 @@ function getId(userid, date, callback){
   })
   })
 }
+//function used to save teams in draft to DB
 function sendTeams(draftid, teamname, callback){
   pool.connect(function(err, client, done){
     if(err){
@@ -63,6 +67,7 @@ function sendTeams(draftid, teamname, callback){
     })
   })
 }
+//function used to find team ids based on draft id
 function getTeamIds(draftid, callback){
   pool.connect(function(err, client, done){
     if(err){
@@ -82,6 +87,7 @@ function getTeamIds(draftid, callback){
     })
   })
 }
+//function used to save players in draft to DB
 function sendPlayers(draftid, teamid, playerid, callback){
   pool.connect(function(err, client, done){
     if(err){
