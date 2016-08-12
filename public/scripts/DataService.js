@@ -37,6 +37,8 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
     data.lbs=[];
     data.safetys=[];
     data.cbs=[];
+    data.draftOrder=[];
+    data.selectedRounds= 0;
   }
   function convertTime(timestring){
     var time=0;

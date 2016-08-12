@@ -20,5 +20,6 @@ angular.module('fantasyApp').controller('registerController',['$http','$location
   }
   function handleFailure(res){
     console.log('failed to add user', res);
+    $location.path('/');
   }
 }]);
