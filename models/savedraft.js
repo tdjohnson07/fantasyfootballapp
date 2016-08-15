@@ -1,5 +1,6 @@
 //functions used by save route to save drafts to the DB
 var pg = require('pg');
+var connectionString='';
 var config = {
   if(process.env.DATABASE_URL != undefined) {
     connectionString = process.env.DATABASE_URL + "?ssl=true";

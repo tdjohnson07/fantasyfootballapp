@@ -1,7 +1,7 @@
 //functions used to create and verify users and encrypt passwords stored in DB
 var pg = require('pg');
 var bcrypt= require('bcrypt');
-
+var connectionString='';
 var config = {
   if(process.env.DATABASE_URL != undefined) {
     connectionString = process.env.DATABASE_URL + "?ssl=true";
