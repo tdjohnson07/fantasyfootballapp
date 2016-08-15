@@ -1,7 +1,15 @@
 var router = require('express').Router();
 var pg = require('pg');
+var connectionString='';
+if(process.env.DATABASE_URL != undefined) {
+  connectionString = process.env.DATABASE_URL + "?ssl=true";
+} else {
+  //running locally, use our local database instead
+  // connectionString = 'postgres://localhost:5432/fantasyDB';
+  connectionString='fantasyDB'
+}
 var config = {
-  database: 'fantasyDB',
+  database: connectionString,
   port: 5432,
   max: 10,
   idleTimeoutMillis: 30000

@@ -5,7 +5,8 @@ if(process.env.DATABASE_URL != undefined) {
   connectionString = process.env.DATABASE_URL + "?ssl=true";
 } else {
   //running locally, use our local database instead
-  connectionString = 'postgres://localhost:5432/fantasyDB';
+  // connectionString = 'postgres://localhost:5432/fantasyDB';
+  connectionString= 'fantasyDB';
 }
 var config = {
   database: connectionString,
