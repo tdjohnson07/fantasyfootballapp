@@ -62,8 +62,8 @@ app.use('/players', players);
 app.use('/save', save);
 app.use('/drafts', drafts);
 app.use('/ranked', ranked);
-
-var server=app.listen(3000, function(){
-  var port=server.address().port;
-  console.log("listening on port", port);
+var port=process.env.PORT || 3000;
+var server=app.listen(port, function(){
+  var logport=server.address().port;
+  console.log("listening on port", logport);
 })
