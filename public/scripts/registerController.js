@@ -16,7 +16,7 @@ angular.module('fantasyApp').controller('registerController',['$http','$location
   }
   function handleSuccess(res){
     // console.log('success adding user', res);
-    $location.path('/home')
+    $location.path('/')
   }
   function handleFailure(res){
     vm.showMessage = "Username taken";
