@@ -9,7 +9,6 @@ angular.module('fantasyApp').controller('loginController',['$http', '$location',
     $http.post('/login', sendData).then(handleSuccess, handleFailure);
   }
   function handleSuccess(res){
-    console.log('success', res);
     $location.path('/home');
   }
   function handleFailure(res){

@@ -21,7 +21,6 @@ router.get('/',function(req, res){
         done();
       }
       else{
-        console.log('get players success');
         res.send(result.rows);
         done();
       }

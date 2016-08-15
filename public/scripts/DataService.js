@@ -218,7 +218,6 @@ function randomize(teamArray){
     teamArray[i]=teamArray[ranIndex];
     teamArray[ranIndex]=temp;
   }
-  console.log(teamArray);
   return teamArray;
 }
 //function to get full players list from DB
@@ -239,7 +238,7 @@ function randomize(teamArray){
   }
   //function to show success of getting ranked players to server
   function handleRankedSuccess(res){
-    console.log(res);
+    // console.log(res);
   }
   //function to pull rank players from server to client
   function getRankedPlayers(){
@@ -293,12 +292,10 @@ function randomize(teamArray){
   }
   //function that actualy send players to DB
   function findTeamAndAddPlayers(team, id){
-    console.log(data.teamInfo);
     for(var i=0; i<data.teamInfo.length; i++){
       if(team == data.teamInfo[i].teamName){
         for(var j=0; j<data.teamInfo[i].teamList.length; j++){
           var sendData={};
-          console.log(i);
           sendData.draftid= mostRecentDraftId;
           sendData.teamid = id;
           sendData.playerid = data.teamInfo[i].teamList[j].id
@@ -309,18 +306,21 @@ function randomize(teamArray){
   }
   //generic handle success function
   function success(res){
-    console.log('success');
+    // console.log('success');
   }
   //generic handle failure function
   function failure(res){
     console.log('failure');
   }
+  //function to pull draft instances for a user from db
   function getDrafts(){
     $http.get('/drafts').then(getDraftsSuccess, failure);
   }
+  //function to store drafts on data as an array to display which drafts to display
   function getDraftsSuccess(res){
     data.prevDrafts=res.data.rows;
   }
+  //function to take in the current draft selected and pull those results from the Db
   function getCurrentDraft(draft){
     data.draftToView=[];
     data.teams=[];
@@ -328,16 +328,17 @@ function randomize(teamArray){
     sendData.draft = draft;
     $http.post('/drafts/getCurrent', sendData).then(getCurrentSucess, failure);
   }
+  //function to store specific draft results to display them
   function getCurrentSucess(res){
-    console.log(res.data.rows);
     data.draftToView=res.data.rows;
     while(data.draftToView.length!= 0){
       data.teams.push(data.draftToView.splice(0,data.selectedDraft.numberofrounds));
     }
-    console.log(data.teams);
   }
   // getPlayers();
+  //pull ranked players from fantasyfootballnerd once this file is loaded
   getRanked();
+  //functions exported
   return {
     data: data,
     convertTime: convertTime,

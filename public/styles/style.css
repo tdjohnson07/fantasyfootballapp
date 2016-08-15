@@ -5,10 +5,11 @@ header {
   text-align: center;
   background-image: url("../images/tweed.png");
   height: 100px;
+  color: burlywood;
 }
 header h1{
   padding-top: 20px;
-  color: burlywood;
+  font-size: 40px;
 }
 .loginContent{
   width: 60%;

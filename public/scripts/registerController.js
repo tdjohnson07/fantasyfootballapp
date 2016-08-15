@@ -3,10 +3,10 @@ angular.module('fantasyApp').controller('registerController',['$http','$location
   vm.username='';
   vm.password='';
   vm.confirmPassword='';
-  vm.showMessage=false;
+  vm.showMessage="";
   vm.register = function(){
     if(vm.password != vm.confirmPassword || vm.username==='' || vm.password ===''){
-      vm.showMessage = true;
+      vm.showMessage = "Passwords do not match";
       return;
     }
     var sendData = {};
@@ -15,11 +15,12 @@ angular.module('fantasyApp').controller('registerController',['$http','$location
     $http.post('/register', sendData).then(handleSuccess, handleFailure);
   }
   function handleSuccess(res){
-    console.log('success adding user', res);
+    // console.log('success adding user', res);
     $location.path('/home')
   }
   function handleFailure(res){
+    vm.showMessage = "Username taken";
     console.log('failed to add user', res);
-    $location.path('/');
+    $location.path('/register');
   }
 }]);

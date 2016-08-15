@@ -12,8 +12,6 @@ router.post('/', function(req, res){
   })
 });
 router.post('/getdraft', function(req, res){
-    // console.log(req.body);
-    // console.log(req.user);
     savedraft.getId(req.user.id, req.body.date, function(err, result){
       if(err){
         console.log("get draft id error", err);
@@ -24,7 +22,6 @@ router.post('/getdraft', function(req, res){
     })
 });
 router.post('/sendteams', function(req, res){
-  // console.log(req.body);
     savedraft.sendTeams(req.body.draftid, req.body.teamname, function(err, result){
       if(err){
         console.log('sendTeams error', err);

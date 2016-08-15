@@ -1,5 +1,4 @@
 angular.module('fantasyApp').controller('snakedraftController',['$location','$timeout', 'DataService', function($location,$timeout, DataService){
-  console.log(DataService.data);
   var vm = this;
   vm.data = DataService.data;
   if(vm.data.idp){
@@ -90,7 +89,6 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     getDisplayList(playerArray, displayIndex);
   }
   vm.selectPlayer = function(player){
-    console.log(player);
     vm.playerSelected = true;
     vm.selectedP=player;
     vm.selectedPlayer=DataService.locatePlayer(player);
@@ -130,7 +128,6 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     vm.inTheHole = vm.data.draftOrder[selectedTeamIndex+2];
     vm.timerCount=vm.data.pickTime;
     vm.undune=false;
-    console.log(location, locationTwo);
   }
   vm.undo = function(){
   DataService.locateArray(lastPickTwo.position).push(lastPickTwo);
@@ -180,6 +177,5 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     vm.draftSaved = true;
     DataService.saveDraft();
   }
-  console.log(vm.data.teamInfo);
   getDisplayList(vm.data.ranked, displayIndex);
 }]);

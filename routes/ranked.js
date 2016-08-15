@@ -18,7 +18,6 @@ function getPlayers(){
     }
     else{
       ranked=JSON.parse(body);
-      // console.log(ranked.DraftRankings);
       players=ranked.DraftRankings;
     }
   })

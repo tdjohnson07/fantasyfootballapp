@@ -25,7 +25,7 @@
   <div class="row">
     <div class="col-md-3">
       <h3 ng-hide="snake.playerSelected">Select a Player</h3>
-      <h3>{{snake.selectedPlayer.displayname}} {{snake.selectedPlayer.position}}
+      <h3 class="selected">{{snake.selectedPlayer.displayname}} {{snake.selectedPlayer.position}}
           {{snake.selectedPlayer.team}}</h3>
         <button ng-click="snake.draft()">Draft Player</button>
         <h4>Team Drafting: {{snake.selectedTeam}}</h4>

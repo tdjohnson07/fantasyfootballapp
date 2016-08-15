@@ -22,8 +22,8 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
     }
   }
   vm.start = function(){
-    DataService.sortPlayers(DataService.data.ranked);
-    DataService.sortDef(DataService.data.players);
+    // DataService.sortPlayers(DataService.data.ranked);
+    // DataService.sortDef(DataService.data.players);
     DataService.data.setTeams= vm.setTeams;
     DataService.data.idp=vm.idp;
     DataService.data.selectedRounds=vm.selectedRounds;
@@ -57,10 +57,14 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
         vm.displayMessage = "Please Enter Starting Cash for each Team";
         return;
       }
+      DataService.sortPlayers(DataService.data.ranked);
+      DataService.sortDef(DataService.data.players);
       DataService.setTeamInfo();
       $location.path('/auction');
     }
     else if(DataService.data.draftType === "snake"){
+      DataService.sortPlayers(DataService.data.ranked);
+      DataService.sortDef(DataService.data.players);
       DataService.data.pickTime = DataService.convertTime(vm.pickTime);
       DataService.setTeamInfo();
       DataService.setDraftOrder(vm.setTeams, vm.selectedRounds);

@@ -12,7 +12,7 @@
       <div>
         <label for="confirmPassword">Confirm Password:</label>
         <input type="password" ng-model="register.confirmPassword" id="confirmPassword" />
-        <h3 class="text-danger" ng-show="register.showMessage">Passwords do not match</h3>
+        <h3 class="text-danger">{{register.showMessage}}</h3>
       </div>
       <button ng-click="register.register()">register</button>
       <a href="/">return to login</a>
