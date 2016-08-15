@@ -7,7 +7,7 @@
 <select name="numTeams" ng-model="setup.selectedNum">
   <option ng-repeat="num in setup.numOfTeams" value={{num}}>{{num}}</option>
 </select>
-<button ng-click="setup.getNum()">Set Team Names</button>
+<button ng-show="setup.teamsset"ng-click="setup.getNum()">Set Team Names</button>
 <div ng-repeat="num in setup.setTeams track by $index">
 <input type="text" id="teamName" ng-model="setup.setTeams[$index]" placeholder="setup.setTeams[$index]">
 </div>

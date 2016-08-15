@@ -46,7 +46,7 @@ header h1{
 }
 .teamlist{
 
-  width:90px;
+  width:98%;
   margin: 0 20px 0 0;
 list-style: none;
 display: flex;
@@ -90,6 +90,10 @@ height: 70px;
 }
 .CB{
   background-color: #336600;
+}
+.selected{
+  color: blue;
+  text-shadow: 1px 1px red;
 }
 .playerlist{
   margin-top: 10px;

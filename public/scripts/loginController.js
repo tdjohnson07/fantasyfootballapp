@@ -3,7 +3,6 @@ angular.module('fantasyApp').controller('loginController',['$http', '$location',
   vm.username = '';
   vm.password = '';
   vm.login = function(){
-    console.log('here',  vm.username, vm.password);
     var sendData = {};
     sendData.username =vm.username;
     sendData.password = vm.password;

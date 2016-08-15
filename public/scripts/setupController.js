@@ -8,15 +8,18 @@ angular.module('fantasyApp').controller('setupController',['$location', 'DataSer
   vm.selectedRounds= 0;
   vm.randomize=false;
   vm.display=false;
+  vm.teamsset=true;
   if(DataService.data.draftType === "auction"){
       vm.auctionTrue = true;
   }
   vm.getNum = function(){
-    console.log(vm.selectedNum);
-    for (var i=0; i<vm.selectedNum; i++){
-      vm.setTeams.push("team"+(i+1));
+    if(vm.selectedNum>0){
+      for (var i=0; i<vm.selectedNum; i++){
+        vm.setTeams.push("team"+(i+1));
+      }
+      vm.teamsset=false;
+
     }
-    console.log(vm.setTeams);
   }
   vm.start = function(){
     DataService.sortPlayers(DataService.data.ranked);

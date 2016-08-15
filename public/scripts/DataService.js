@@ -237,7 +237,7 @@ function randomize(teamArray){
   function getRanked(){
     $http.get('/ranked').then(handleRankedSuccess, handleFailure);
   }
-  //function to show success of getting ranked players to db
+  //function to show success of getting ranked players to server
   function handleRankedSuccess(res){
     console.log(res);
   }
