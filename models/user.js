@@ -2,14 +2,13 @@
 var pg = require('pg');
 var bcrypt= require('bcrypt');
 var connectionString='';
-var config = {
-  if(process.env.DATABASE_URL != undefined) {
-    connectionString = process.env.DATABASE_URL + "?ssl=true";
+if(process.env.DATABASE_URL != undefined) {
+  connectionString = process.env.DATABASE_URL + "?ssl=true";
 } else {
-    // running locally, use our local database instead
-    connectionString = 'postgres://localhost:5432/fantasyDB';
+  //running locally, use our local database instead
+  connectionString = 'postgres://localhost:5432/fantasyDB';
 }
-
+var config = {
   database: connectionString,
   port: 5432,
   max: 10,
