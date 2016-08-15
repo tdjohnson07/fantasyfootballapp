@@ -70,7 +70,7 @@ angular.module('fantasyApp').factory('DataService',['$http', function($http){
         time = 240;
         break;
       default:
-        time = 120 * 1000;
+        time = 120;
       }
       return time;
   }
