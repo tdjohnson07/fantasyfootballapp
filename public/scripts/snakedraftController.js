@@ -146,9 +146,11 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     var index = DataService.findTeamInfo(vm.missedTeam);
     vm.data.teamInfo[index].teamList.push(vm.selectedPlayer);
     var location = vm.data.players.indexOf(vm.selectedPlayer);
-    var playerArray=DataService.locateArray(vm.selectedPlayer.position);
-    var locationTwo = playerArray.indexOf(vm.selectedPlayer);
+    var playerArray=DataService.locateArray(vm.selectedP.position);
+    var locationTwo = playerArray.indexOf(vm.selectedP);
     var teamlocal = vm.missedPicks.indexOf(vm.missedTeam);
+    var locationThree = vm.data.ranked.indexOf(vm.selectedP);
+    vm.data.ranked.splice(locationThree, 1);
     vm.missedPicks.splice(teamlocal, 1);
     vm.data.players.splice(location, 1);
     DataService.locateArray(vm.selectedPlayer.position).splice(locationTwo, 1);

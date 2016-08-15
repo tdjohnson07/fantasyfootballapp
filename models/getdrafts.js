@@ -1,13 +1,14 @@
 //functions used by drafts route to pull saved drafts from DB
 var pg = require('pg');
-var connectionString='';
-if(process.env.DATABASE_URL != undefined) {
-  connectionString = process.env.DATABASE_URL + "?ssl=true";
-} else {
-  //running locally, use our local database instead
-  // connectionString = 'postgres://localhost:5432/fantasyDB';
-  connectionString= 'fantasyDB';
-}
+var connectionString='fantasyDB';
+// if(process.env.DATABASE_URL != undefined) {
+//   // connectionString = process.env.DATABASE_URL + "?ssl=true";
+//   connectionString='postgres://ymiplqczvfkqmx:wo9cZpsvgC42lDpOntf-Brc-_M@ec2-107-20-198-81.compute-1.amazonaws.com:5432/d6s3398s2754r8'
+// } else {
+//   //running locally, use our local database instead
+//   // connectionString = 'postgres://localhost:5432/fantasyDB';
+//   connectionString= 'fantasyDB';
+// }
 var config = {
   database: connectionString,
   port: 5432,
