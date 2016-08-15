@@ -1,21 +1,28 @@
 //functions used by save route to save drafts to the DB
 var pg = require('pg');
-var connectionString='fantasyDB';
-// if(process.env.DATABASE_URL != undefined) {
-//   // connectionString = process.env.DATABASE_URL + "?ssl=true";
-//   connectionString='postgres://ymiplqczvfkqmx:wo9cZpsvgC42lDpOntf-Brc-_M@ec2-107-20-198-81.compute-1.amazonaws.com:5432/d6s3398s2754r8'
-// } else {
-//   // running locally, use our local database instead
-//   // connectionString = 'postgres://localhost:5432/fantasyDB';
-//   connectionString= 'fantasyDB';
-// }
-// console.log(connectionString);
-var config = {
-  database: connectionString,
-  port: 5432,
-  max: 10,
-  idleTimeoutMillis: 30000
-};
+var url=require('url');
+var config={};
+if(process.env.DATABASE_URL != undefined) {
+  // connectionString = process.env.DATABASE_URL + "?ssl=true";
+  var params = url.parse(process.env.DATABASE_URL);
+  var auth = params.auth ? params.auth.split(':') : [null, null];
+    config = {
+    user: auth[0],
+    password: auth[1],
+    host: params.hostname,
+    port: params.port,
+    database: params.pathname.split('/')[1],
+    ssl: process.env.SSL
+  };
+} else {
+  config = {
+    database: 'fantasyDB',
+    port: 5432,
+    max: 10,
+    idleTimeoutMillis: 30000
+  };
+}
+
 var pool = new pg.Pool(config);
 //function used to create draft instance in DB
 function createDraft(userid, date, draftname, numofteams, numofrounds, callback){
