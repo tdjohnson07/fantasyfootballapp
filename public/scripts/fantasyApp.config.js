@@ -26,7 +26,7 @@ angular.module('fantasyApp').config(['$routeProvider', '$locationProvider', func
       controllerAs: 'prevSel'
     })
     .when('/auction',{
-      templateUrl: '/views/auctionDraft.html',
+      templateUrl: '/views/auctiondraft.html',
       controller: 'auctiondraftController',
       controllerAs: 'auction',
       // css: '/styles/style.css'
