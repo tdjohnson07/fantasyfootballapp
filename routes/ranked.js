@@ -10,7 +10,7 @@ router.get('/players', function(req, res){
   res.send(players);
 })
 function getPlayers(){
-  request("http://www.fantasyfootballnerd.com/service/draft-rankings/json/sfvkjjeeymm8/0/",
+  request("http://www.fantasyfootballnerd.com/service/draft-rankings/json//0/",
   function(err, res, body){
     var rankedplayers=[];
     if(err){
