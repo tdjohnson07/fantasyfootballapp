@@ -1,0 +1,18 @@
+<a class="nav" href="/home">Home page</a>
+<h3 class="setupheader">Enter the Settings for Your Draft</h3>
+<div class="setup">
+<h4>Enter Name For Your Draft</h4>
+<input type="text" id="draftName" ng-model="isu.draftName" placeholder="Enter Draft Name">
+<br>
+<label for="idps">Include IDP's:</label>
+<input type="checkbox" ng-model="isu.idp" id="idps">
+<br>
+<br>
+<h3 class="text-danger" ng-show="isu.display">{{isu.displayMessage}}</h3>
+<button ng-click="isu.enterCash()">Enter Cash for auction Drafting</button>
+<div ng-show="isu.auctionTrue">
+  <h4>Enter starting Cash</h4>
+    <input type="number" id="cash" ng-model="isu.cash">
+</div>
+</div>
+<button class="btn btn-success"ng-click="isu.start()">Start Draft</button>

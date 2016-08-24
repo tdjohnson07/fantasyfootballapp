@@ -19,7 +19,7 @@ header h1{
   display: inline-block;
 }
 .home{
-  width: 60%;
+  /*width: 100%;*/
   margin: 30px auto;
   text-align: center;
 }

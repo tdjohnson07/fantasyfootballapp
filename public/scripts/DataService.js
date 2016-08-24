@@ -240,6 +240,13 @@ function randomize(teamArray){
   function handleRankedSuccess(res){
     // console.log(res);
   }
+  function getValues(){
+    $http.get('/values').then(handleValueSuccess, handleFailure);
+  }
+  //function to show success of getting ranked players to server
+  function handleValueSuccess(res){
+    // console.log(res);
+  }
   //function to pull rank players from server to client
   function getRankedPlayers(){
     $http.get('/ranked/players').then(handleReturnRanked, handleFailure);
@@ -338,6 +345,7 @@ function randomize(teamArray){
   // getPlayers();
   //pull ranked players from fantasyfootballnerd once this file is loaded
   getRanked();
+  getValues();
   //functions exported
   return {
     data: data,

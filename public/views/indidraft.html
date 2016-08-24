@@ -1,0 +1,41 @@
+<a href="/home">Home page</a>
+<!-- <button class="saveBut btn btn-warning" ng-hide="indi.draftComplete" ng-click="indi.completeDraft()">Draft complete</button>
+<button class="saveBut btn btn-warning" ng-show="indi.draftnotSaved" ng-click="indi.saveDraft()">Save Draft</button>
+<h3 class="saveBut text-success" ng-show="indi.draftSaved">Draft Saved</h3> -->
+<h2 class="draftname">{{indi.data.draftName}}</h2>
+<div class="container">
+  <div class="row">
+    <div class="playerlist col-md-3">
+      <button ng-click="indi.auction()">Auction Ranks</button>
+      <button ng-click="indi.regular()">Rankings</button>
+      <div class="row">
+        <p class="narrowList col-md-1" ng-repeat="position in indi.positions" ng-click="indi.narrow(position)">
+          {{position}}
+        </p>
+      </div>
+        <ul>
+        <li ng-repeat="player in indi.displayList track by $index" ng-click="indi.selectPlayer(player)">
+        {{player.minPrice}} {{player.maxPrice}} {{player.avgPrice}}
+        {{player.overallRank}} {{player.displayName}} {{player.displayname}} {{player.position}} {{player.team}}
+        </li>
+      </ul>
+      <button ng-show="indi.endList" ng-click="indi.prevDisplay()">Prev</button>
+      <button ng-show="indi.startList"ng-click="indi.nextDisplay()">Next</button>
+    </div>
+    <div class="col-md-3">
+      <h3 ng-hide="indi.playerSelected">Select a Player</h3>
+      <h3 class="selected">{{indi.selectedPlayer.displayname}} {{indi.selectedPlayer.position}}
+        {{indi.selectedPlayer.team}}</h3>
+      <button class="btn btn-success" ng-click="indi.draft()">Draft Player</button>
+      <button class="btn btn-danger"ng-click="indi.eliminate()">Eliminate Player</button>
+      <h4>{{indi.displayMessage}}</h4>
+    </div>
+    <div class="col-md-3">
+      <ul>
+        <li class="{{player.position}}" ng-repeat="player in indi.teamlist">
+         {{player.displayName}} {{player.position}} {{player.team}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

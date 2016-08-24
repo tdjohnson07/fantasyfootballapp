@@ -11,6 +11,7 @@ var players = require('./routes/players');
 var save = require('./routes/save');
 var drafts = require('./routes/drafts');
 var ranked = require('./routes/ranked');
+var values = require('./routes/values');
 var app=express();
 
 app.use(session({
@@ -62,8 +63,9 @@ app.use('/players', players);
 app.use('/save', save);
 app.use('/drafts', drafts);
 app.use('/ranked', ranked);
+app.use('/values', values);
 
 var server=app.listen(process.env.PORT || 3000, function(){
   var port=server.address().port;
   console.log("listening on port", port);
-})
+});

@@ -41,5 +41,15 @@ angular.module('fantasyApp').config(['$routeProvider', '$locationProvider', func
       controller: 'previousdraftviewController',
       controllerAs: 'prevView'
     })
+    .when('/individual',{
+      templateUrl: '/views/indisetup.html',
+      controller: 'indisetupController',
+      controllerAs: 'isu'
+    })
+    .when('/indidraft',{
+      templateUrl: '/views/indidraft.html',
+      controller: 'indidraftController',
+      controllerAs: 'indi'
+    })
     $locationProvider.html5Mode(true);
 }]);

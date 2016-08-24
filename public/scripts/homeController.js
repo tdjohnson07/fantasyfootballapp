@@ -16,4 +16,8 @@ angular.module('fantasyApp').controller('homeController', ['$http','$location', 
     DataService.getDrafts();
     $location.path('/prevSelect');
   }
+  vm.individual = function(){
+    DataService.data.draftType="individual";
+    $location.path('/individual');
+  }
 }]);
