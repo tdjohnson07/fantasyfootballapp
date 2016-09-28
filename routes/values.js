@@ -1,5 +1,6 @@
 var router = require('express').Router();
 var request = require('request');
+require('dotenv').config();
 var values={};
 var players=[];
 router.get('/', function(req, res){
@@ -10,7 +11,7 @@ router.get('/players', function(req, res){
   res.send(players);
 })
 function getPlayers(){
-  request("http://www.fantasyfootballnerd.com/service/auction/json//",
+  request("http://www.fantasyfootballnerd.com/service/auction/json/"+process.env.key+"/",
   function(err, res, body){
     var rankedplayers=[];
     if(err){
