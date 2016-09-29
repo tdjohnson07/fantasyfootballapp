@@ -214,6 +214,24 @@ function locateArrayAuction(position){
     }
     return player;
   }
+  function locatePlayerAuction(player){
+    var id=player.playerId;
+    for(var i=0; i<data.values.length; i++){
+      if(parseInt(id) == parseInt(data.values[i].playerId)){
+        return data.values[i];
+      }
+    }
+    return player;
+  }
+  function locatePlayerRanked(player){
+    var id=player.playerId;
+    for(var i=0; i<data.ranked.length; i++){
+      if(parseInt(id) == parseInt(data.ranked[i].playerId)){
+        return data.ranked[i];
+      }
+    }
+    return player;
+  }
   return {
     data: data,
     getRankedPlayers: getRankedPlayers,
@@ -224,6 +242,8 @@ function locateArrayAuction(position){
     locatePlayer: locatePlayer,
     getValuePlayers: getValuePlayers,
     sortPlayersAuction: sortPlayersAuction,
-    locateArrayAuction: locateArrayAuction
+    locateArrayAuction: locateArrayAuction,
+    locatePlayerAuction: locatePlayerAuction,
+    locatePlayerRanked: locatePlayerRanked
   }
 }]);

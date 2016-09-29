@@ -73,7 +73,12 @@ angular.module('fantasyApp').controller('indidraftController',['IndiService', fu
   vm.selectPlayer = function(player){
     vm.displayMessage="";
     vm.playerSelected = true;
-    vm.selectedP=player;
+    if(vm.auctionTrue){
+      vm.selectedP=IndiService.locatePlayerAuction(player);
+    }
+    else{
+      vm.selectedP= IndiService.locatePlayerRanked(player);
+    }
     vm.selectedPlayer=IndiService.locatePlayer(player);
   }
   vm.draft = function(){
@@ -82,18 +87,21 @@ angular.module('fantasyApp').controller('indidraftController',['IndiService', fu
       return;
     }
     vm.teamlist.push(vm.selectedP);
-    var location = vm.data.players.indexOf(vm.selectedPlayer);
-    var playerArray=IndiService.locateArray(vm.selectedP.position);
-    var locationTwo = playerArray.indexOf(vm.selectedP);
-    var locationThree = vm.data.ranked.indexOf(vm.selectedP);
-    vm.data.ranked.splice(locationThree, 1);
-    vm.data.players.splice(location, 1);
-    IndiService.locateArray(vm.selectedP.position).splice(locationTwo, 1);
-    getDisplayList(currentDisplay, displayIndex);
+    vm.eliminate();
     vm.displayMessage=vm.selectedPlayer.displayname + " added to your team";
-    vm.playerSelected=false;
-    vm.selectedPlayer = {};
-    vm.amount= null;
+    // var location = vm.data.players.indexOf(vm.selectedPlayer);
+    // var playerArray=IndiService.locateArray(vm.selectedP.position);
+    // var locationTwo = playerArray.indexOf(vm.selectedP);
+    // var locationThree = vm.data.ranked.indexOf(vm.selectedP);
+    // // var locationFour = vm.data.values.indexOf(IndiService.findPlayer(vm.selectPlayer));
+    // vm.data.ranked.splice(locationThree, 1);
+    // vm.data.players.splice(location, 1);
+    // // vm.data.values.splice(locationFour, 1);
+    // IndiService.locateArray(vm.selectedP.position).splice(locationTwo, 1);
+    // getDisplayList(currentDisplay, displayIndex);
+    // vm.playerSelected=false;
+    // vm.selectedPlayer = {};
+    // vm.amount= null;
   }
   vm.eliminate = function(){
     if(!vm.playerSelected){
@@ -106,6 +114,12 @@ angular.module('fantasyApp').controller('indidraftController',['IndiService', fu
       var locationTwo = playerArray.indexOf(vm.selectedP);
       IndiService.locateArrayAuction(vm.selectedP.position).splice(locationTwo, 1);
       var locationThree = vm.data.values.indexOf(vm.selectedP);
+      var player = IndiService.locatePlayerRanked(vm.selectedP);
+      var locationFour = vm.data.values.indexOf(player);
+      var playerArrayTwo = IndiService.locateArray(player.position);
+      var locationFive = playerArrayTwo.indexOf(player);
+      IndiService.locateArray(player.position).splice(locationFive, 1);
+      vm.data.ranked.splice(locationFour, 1);
       vm.data.values.splice(locationThree, 1);
       vm.data.players.splice(location, 1);
     }else{
@@ -113,6 +127,12 @@ angular.module('fantasyApp').controller('indidraftController',['IndiService', fu
     var playerArray=IndiService.locateArray(vm.selectedP.position);
     var locationTwo = playerArray.indexOf(vm.selectedP);
     var locationThree = vm.data.ranked.indexOf(vm.selectedP);
+    var player = IndiService.locatePlayerAuction(vm.selectedP);
+    var locationFour = vm.data.values.indexOf(player);
+    var playerArrayTwo = IndiService.locateArrayAuction(player.position);
+    var locationFive = playerArrayTwo.indexOf(player);
+    IndiService.locateArrayAuction(player.position).splice(locationFive, 1);
+    vm.data.values.splice(locationFour, 1);
     vm.data.ranked.splice(locationThree, 1);
     vm.data.players.splice(location, 1);
     IndiService.locateArray(vm.selectedP.position).splice(locationTwo, 1);
