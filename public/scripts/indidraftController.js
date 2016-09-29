@@ -115,7 +115,7 @@ angular.module('fantasyApp').controller('indidraftController',['IndiService', fu
       IndiService.locateArrayAuction(vm.selectedP.position).splice(locationTwo, 1);
       var locationThree = vm.data.values.indexOf(vm.selectedP);
       var player = IndiService.locatePlayerRanked(vm.selectedP);
-      var locationFour = vm.data.values.indexOf(player);
+      var locationFour = vm.data.ranked.indexOf(player);
       var playerArrayTwo = IndiService.locateArray(player.position);
       var locationFive = playerArrayTwo.indexOf(player);
       IndiService.locateArray(player.position).splice(locationFive, 1);
