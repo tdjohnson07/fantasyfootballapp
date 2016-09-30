@@ -22,15 +22,20 @@
       <button ng-show="indi.endList" ng-click="indi.prevDisplay()">Prev</button>
       <button ng-show="indi.startList"ng-click="indi.nextDisplay()">Next</button>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-5">
       <h3 ng-hide="indi.playerSelected">Select a Player</h3>
       <h3 class="selected">{{indi.selectedPlayer.displayname}} {{indi.selectedPlayer.position}}
         {{indi.selectedPlayer.team}}</h3>
+      <h3 ng-show="indi.data.cash">Your Cash ${{indi.data.cash}}</h3>
+      <label for="amount">Enter Amount:</h4>
+      <input ng-show"indi.data.cash" type="number" ng-model="indi.amount" id="amount">
+      <br>
       <button class="btn btn-success" ng-click="indi.draft()">Draft Player</button>
       <button class="btn btn-danger"ng-click="indi.eliminate()">Eliminate Player</button>
       <h4>{{indi.displayMessage}}</h4>
     </div>
     <div class="col-md-3">
+      <h3> Your Team</h3>
       <ul>
         <li class="{{player.position}}" ng-repeat="player in indi.teamlist">
          {{player.displayName}} {{player.position}} {{player.team}}

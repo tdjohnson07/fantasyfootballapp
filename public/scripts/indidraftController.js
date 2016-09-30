@@ -17,6 +17,7 @@ angular.module('fantasyApp').controller('indidraftController',['IndiService', fu
   vm.draftSaved = false;
   vm.draftnotSaved=false;
   vm.auctionTrue = false;
+  vm.amount = 0;
   var currentDisplay=vm.data.ranked;
   var displayIndex =0;
   console.log(vm.data.values);
@@ -87,21 +88,13 @@ angular.module('fantasyApp').controller('indidraftController',['IndiService', fu
       return;
     }
     vm.teamlist.push(vm.selectedP);
-    vm.eliminate();
     vm.displayMessage=vm.selectedPlayer.displayname + " added to your team";
-    // var location = vm.data.players.indexOf(vm.selectedPlayer);
-    // var playerArray=IndiService.locateArray(vm.selectedP.position);
-    // var locationTwo = playerArray.indexOf(vm.selectedP);
-    // var locationThree = vm.data.ranked.indexOf(vm.selectedP);
-    // // var locationFour = vm.data.values.indexOf(IndiService.findPlayer(vm.selectPlayer));
-    // vm.data.ranked.splice(locationThree, 1);
-    // vm.data.players.splice(location, 1);
-    // // vm.data.values.splice(locationFour, 1);
-    // IndiService.locateArray(vm.selectedP.position).splice(locationTwo, 1);
-    // getDisplayList(currentDisplay, displayIndex);
-    // vm.playerSelected=false;
-    // vm.selectedPlayer = {};
-    // vm.amount= null;
+    if(vm.data.cash){
+      vm.data.cash -= vm.amount;
+    }
+    vm.drafted = true;
+    vm.eliminate();
+    vm.amount = 0;
   }
   vm.eliminate = function(){
     if(!vm.playerSelected){
@@ -138,10 +131,13 @@ angular.module('fantasyApp').controller('indidraftController',['IndiService', fu
     IndiService.locateArray(vm.selectedP.position).splice(locationTwo, 1);
     }
     getDisplayList(currentDisplay, displayIndex);
-    vm.displayMessage=vm.selectedPlayer.displayname + " elimated";
+    if(!vm.drafted){
+      vm.displayMessage=vm.selectedPlayer.displayname + " elimated";
+    }
     vm.playerSelected=false;
     vm.selectedPlayer = {};
     vm.amount= null;
+    vm.drafted = false;
   }
   getDisplayList(vm.data.ranked, displayIndex);
 }]);
