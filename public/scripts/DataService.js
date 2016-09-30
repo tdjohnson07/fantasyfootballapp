@@ -186,6 +186,15 @@ function locatePlayer(player){
   }
   return player;
 }
+function locatePlayerOpposite(player){
+  var id=player.playerid;
+  for(var i=0; i<data.ranked.length; i++){
+    if(parseInt(id) == parseInt(data.ranked[i].playerId)){
+      return data.ranked[i];
+    }
+  }
+  return player;
+}
 //function used to find the index of a team takes in a string of team name
 function findTeamInfo(team){
   var index = 0;
@@ -363,6 +372,7 @@ function randomize(teamArray){
     getCurrentDraft: getCurrentDraft,
     getRankedPlayers: getRankedPlayers,
     locatePlayer: locatePlayer,
+    locatePlayerOpposite: locatePlayerOpposite,
     sortDef: sortDef,
     getPlayers: getPlayers,
     emptyArrays: emptyArrays

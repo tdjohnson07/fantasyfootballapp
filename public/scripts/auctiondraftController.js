@@ -60,6 +60,10 @@ angular.module('fantasyApp').controller('auctiondraftController',['$location', '
     vm.playerSelected = true;
     vm.selectedP=player;
     vm.selectedPlayer=DataService.locatePlayer(player);
+    if(player == vm.selectedPlayer){
+      console.log("matching");
+      vm.selectedP = DataService.locatePlayerOpposite(player);
+    }
   }
   //button function used to draft player, first checks it is an eligble draft
   //choice, then locates player in three arrays being used and removes them, then

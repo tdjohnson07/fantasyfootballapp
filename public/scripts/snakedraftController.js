@@ -92,6 +92,10 @@ angular.module('fantasyApp').controller('snakedraftController',['$location','$ti
     vm.playerSelected = true;
     vm.selectedP=player;
     vm.selectedPlayer=DataService.locatePlayer(player);
+    if(player == vm.selectedPlayer){
+      console.log("matching");
+      vm.selectedP = DataService.locatePlayerOpposite(player);
+    }
   }
   vm.draft = function(){
     var index=DataService.findTeamInfo(vm.selectedTeam);
