@@ -27,8 +27,8 @@
       <h3 class="selected">{{indi.selectedPlayer.displayname}} {{indi.selectedPlayer.position}}
         {{indi.selectedPlayer.team}}</h3>
       <h3 ng-show="indi.data.cash">Your Cash ${{indi.data.cash}}</h3>
-      <label for="amount">Enter Amount:</h4>
-      <input ng-show"indi.data.cash" type="number" ng-model="indi.amount" id="amount">
+      <label ng-show="indi.data.cash" for="amount">Enter Amount:</label>
+      <input ng-show="indi.data.cash" type="number" ng-model="indi.amount" id="amount">
       <br>
       <button class="btn btn-success" ng-click="indi.draft()">Draft Player</button>
       <button class="btn btn-danger"ng-click="indi.eliminate()">Eliminate Player</button>
